@@ -101,8 +101,7 @@ export function Hero() {
             </p>
 
             <h1 className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-7xl lg:text-8xl">
-              <span className="text-gradient text-glow-purple">Andri Rizky</span>{' '}
-              <span className="text-text-primary">P</span>
+              <span className="text-gradient text-glow-purple">Andri Rizky P</span>
             </h1>
 
             {/* typewriter role */}
