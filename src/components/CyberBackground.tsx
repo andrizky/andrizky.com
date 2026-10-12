@@ -33,8 +33,8 @@ export function CyberBackground() {
   const parallaxY = useMotionValue(0)
 
   // springy followers for smooth, organic motion
-  const spotlightX = useSpring(cursorX, { stiffness: 55, damping: 18, mass: 0.9 })
-  const spotlightY = useSpring(cursorY, { stiffness: 55, damping: 18, mass: 0.9 })
+  const spotlightX = useSpring(cursorX, { stiffness: 40, damping: 22, mass: 1 })
+  const spotlightY = useSpring(cursorY, { stiffness: 40, damping: 22, mass: 1 })
   const orbPX = useSpring(parallaxX, { stiffness: 40, damping: 20 })
   const orbPY = useSpring(parallaxY, { stiffness: 40, damping: 20 })
 
@@ -104,14 +104,14 @@ export function CyberBackground() {
 
       {/* cursor spotlight — soft glow trailing the pointer */}
       <motion.div
-        className="absolute top-0 left-0 h-[32rem] w-[32rem] rounded-full"
+        className="absolute top-0 left-0 h-[52rem] w-[52rem] rounded-full"
         style={{
           x: spotlightX,
           y: spotlightY,
-          marginLeft: '-16rem',
-          marginTop: '-16rem',
+          marginLeft: '-26rem',
+          marginTop: '-26rem',
           background:
-            'radial-gradient(closest-side, rgba(99,102,241,0.20), rgba(168,85,247,0.10) 45%, transparent 72%)',
+            'radial-gradient(closest-side, rgba(99,102,241,0.14), rgba(168,85,247,0.06) 45%, transparent 100%)',
         }}
       />
 

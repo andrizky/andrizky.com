@@ -12,7 +12,7 @@ interface Particle {
 
 const COLORS = ['56,189,248', '168,85,247', '129,140,248'] // blue, purple, indigo
 const REPEL_RADIUS = 130 // px — cursor pushes particles away within this range
-const LINK_DISTANCE = 110 // px — faint lines between nearby particles
+const LINK_DISTANCE = 130 // px — faint lines between nearby particles
 
 /**
  * Canvas particle field: slow-drifting neon dots that flee from the
@@ -40,7 +40,7 @@ export function ParticleField() {
     const mouse = { x: -9999, y: -9999 }
 
     const spawn = () => {
-      const count = Math.min(110, Math.floor((w * h) / 16000))
+      const count = Math.min(180, Math.floor((w * h) / 9500))
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -107,7 +107,7 @@ export function ParticleField() {
           const d2 = dx * dx + dy * dy
           if (d2 < LINK_DISTANCE * LINK_DISTANCE) {
             const t = 1 - Math.sqrt(d2) / LINK_DISTANCE
-            ctx.strokeStyle = `rgba(99,102,241,${(t * 0.18).toFixed(3)})`
+            ctx.strokeStyle = `rgba(99,102,241,${(t * 0.22).toFixed(3)})`
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
