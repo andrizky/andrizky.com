@@ -106,15 +106,43 @@ export const experience: ExperienceItem[] = [
 export const skillGroups: { label: Record<Lang, string>; skills: string[] }[] = [
   {
     label: { en: 'Frontend', id: 'Frontend' },
-    skills: ['React', 'TypeScript', 'Tailwind CSS', 'Motion', 'Vite', 'HTML/CSS'],
+    skills: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Motion',
+      'Vite',
+      'Astro',
+      'HTML/CSS',
+    ],
   },
   {
     label: { en: 'Backend', id: 'Backend' },
-    skills: ['Node.js', 'PostgreSQL', 'Supabase', 'REST API', 'GraphQL'],
+    skills: [
+      'Node.js',
+      'PostgreSQL',
+      'SQLite',
+      'Supabase',
+      'REST API',
+      'GraphQL',
+      'Google Apps Script',
+    ],
   },
   {
     label: { en: 'Tools & Others', id: 'Tools & Lainnya' },
-    skills: ['Git', 'Docker', 'Cloudflare', 'Figma', 'Linux'],
+    skills: [
+      'Git',
+      'Docker',
+      'Cloudflare',
+      'Vercel',
+      'Netlify',
+      'n8n',
+      'Google Sheets',
+      'Canva',
+      'AI Agent',
+      'Linux',
+    ],
   },
 ]
 
