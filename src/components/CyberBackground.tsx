@@ -33,8 +33,8 @@ export function CyberBackground() {
   const parallaxY = useMotionValue(0)
 
   // springy followers for smooth, organic motion
-  const spotlightX = useSpring(cursorX, { stiffness: 90, damping: 24, mass: 0.8 })
-  const spotlightY = useSpring(cursorY, { stiffness: 90, damping: 24, mass: 0.8 })
+  const spotlightX = useSpring(cursorX, { stiffness: 160, damping: 28, mass: 0.7 })
+  const spotlightY = useSpring(cursorY, { stiffness: 160, damping: 28, mass: 0.7 })
   const orbPX = useSpring(parallaxX, { stiffness: 40, damping: 20 })
   const orbPY = useSpring(parallaxY, { stiffness: 40, damping: 20 })
 
