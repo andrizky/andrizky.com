@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { ChevronDown, FolderGit2, Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '../components/icons'
+import avatarImg from '../assets/avatar.jpeg'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { socials, ui } from '../data/content'
 import { scrollToSection } from '../lib/scroll'
@@ -55,6 +56,44 @@ export function Hero() {
   return (
     <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6">
       <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl text-center">
+        {/* avatar */}
+        <motion.div variants={item} className="mb-8 flex justify-center">
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative"
+          >
+            {/* glow underneath */}
+            <div
+              aria-hidden
+              className="absolute inset-0 rounded-full bg-gradient-to-br from-neon-blue/40 to-neon-purple/40 blur-2xl"
+            />
+            {/* rotating gradient ring */}
+            <div
+              aria-hidden
+              className="animate-spin-slow absolute -inset-1.5 rounded-full"
+              style={{ background: 'conic-gradient(from 0deg, #38bdf8, #a855f7, #ec4899, #38bdf8)' }}
+            />
+            {/* dashed orbit */}
+            <div aria-hidden className="absolute -inset-4 rounded-full border border-dashed border-neon-purple/30" />
+            {/* orbiting dot */}
+            <div
+              aria-hidden
+              className="animate-spin-slow absolute -inset-4"
+              style={{ animationDuration: '14s', animationDirection: 'reverse' }}
+            >
+              <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-blue shadow-[0_0_8px_rgba(56,189,248,0.9)]" />
+            </div>
+            <img
+              src={avatarImg}
+              alt={ui.hero.name}
+              width={160}
+              height={160}
+              className="relative h-28 w-28 rounded-full border-4 border-bg object-cover sm:h-40 sm:w-40"
+            />
+          </motion.div>
+        </motion.div>
+
         {/* status badge */}
         <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5">
           <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot" />
