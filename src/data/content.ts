@@ -72,7 +72,7 @@ export const projects: Project[] = [
 
 export const experience: ExperienceItem[] = [
   {
-    period: '2013 — Present',
+    period: '2020 — Present',
     role: 'Software Engineer',
     company: 'Freelance',
     description: {
@@ -89,7 +89,7 @@ export const experience: ExperienceItem[] = [
       en: 'Supervising FTTH deployment projects in the Construction unit — overseeing progress, quality and delivery of network builds across regions.',
       id: 'Mengawasi proyek deployment FTTH di unit Construction — memantau progres, kualitas, dan penyelesaian pembangunan jaringan lintas wilayah.',
     },
-    tech: ['Project Supervision', 'FTTH', 'Deployment', 'Construction'],
+    tech: ['Leadership', 'Project Supervision', 'FTTH', 'Deployment', 'Construction'],
   },
   {
     period: '2020 — 2024',
@@ -99,17 +99,17 @@ export const experience: ExperienceItem[] = [
       en: 'Managing provisioning and migration operations in the Operations unit — coordinating field teams and ensuring service moves happen on time and to standard.',
       id: 'Mengelola operasional provisioning dan migrasi di unit Operations — mengoordinasikan tim lapangan dan memastikan migrasi layanan tepat waktu dan sesuai standar.',
     },
-    tech: ['Site Management', 'Provisioning', 'Migration', 'Operations'],
+    tech: ['Leadership', 'Site Management', 'Provisioning', 'Migration', 'Operations'],
   },
   {
-    period: '2016 — 2019',
+    period: '2015 — 2019',
     role: 'Team Leader — Provisioning, DSHR, Migration, CCAN, BGES',
     company: 'Telkom Akses',
     description: {
       en: 'Leading teams across provisioning, DSHR, migration, CCAN and BGES operations in the Operations unit.',
       id: 'Memimpin tim di operasional provisioning, DSHR, migrasi, CCAN, dan BGES pada unit Operations.',
     },
-    tech: ['Team Leadership', 'Provisioning', 'DSHR', 'CCAN', 'BGES'],
+    tech: ['Leadership', 'Provisioning', 'DSHR', 'CCAN', 'BGES'],
   },
   {
     period: '2013 — 2014',
@@ -225,7 +225,6 @@ export const ui = {
       en: 'My professional journey so far.',
       id: 'Perjalanan profesional saya sejauh ini.',
     },
-    present: { en: 'Present', id: 'Sekarang' },
   },
   skills: {
     title: { en: 'Skills & Tools', id: 'Keahlian & Tools' },

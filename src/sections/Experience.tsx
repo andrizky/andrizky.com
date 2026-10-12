@@ -1,5 +1,4 @@
 import { motion } from 'motion/react'
-import { Briefcase } from 'lucide-react'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { experience, ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
@@ -57,17 +56,6 @@ export function Experience() {
             </motion.article>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 flex items-center gap-3 pl-10 font-mono text-xs text-text-muted"
-        >
-          <Briefcase size={14} className="text-neon-purple" />
-          {'//'} {pick(lang, ui.experience.present)}
-        </motion.div>
       </div>
     </section>
   )
