@@ -127,7 +127,7 @@ export const ui = {
   hero: {
     available: { en: 'Available for work', id: 'Terbuka untuk kerja' },
     greeting: { en: "Hi, I'm", id: 'Halo, saya' },
-    name: 'Andri Rizky Prayogo',
+    name: 'Andri Rizky P',
     roles: {
       en: ['Full-Stack Developer', 'Frontend Developer', 'UI Enthusiast'],
       id: ['Full-Stack Developer', 'Frontend Developer', 'Pecinta UI'],
@@ -189,8 +189,8 @@ export const ui = {
     },
     button: { en: 'Say hello', id: 'Sapa saya' },
     copyright: {
-      en: 'Designed & built by Andri Rizky Prayogo',
-      id: 'Dirancang & dibangun oleh Andri Rizky Prayogo',
+      en: 'Designed & built by Andri Rizky P',
+      id: 'Dirancang & dibangun oleh Andri Rizky P',
     },
   },
 }
