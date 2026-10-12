@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { skillGroups, ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
+import { SkillIcon } from '../components/TechMarquee'
 
 export function Skills() {
   const { lang } = useLanguage()
@@ -28,8 +29,9 @@ export function Skills() {
               {group.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="cursor-default rounded-lg border border-line bg-surface-light/80 px-3 py-1.5 font-mono text-xs text-text-secondary transition-all hover:-translate-y-0.5 hover:border-neon-blue/60 hover:text-neon-blue hover:shadow-[0_0_16px_rgba(56,189,248,0.25)]"
+                  className="flex cursor-default items-center gap-2 rounded-lg border border-line bg-surface-light/80 px-3 py-1.5 font-mono text-xs text-text-secondary transition-all hover:-translate-y-0.5 hover:border-neon-blue/60 hover:text-neon-blue hover:shadow-[0_0_16px_rgba(56,189,248,0.25)]"
                 >
+                  <SkillIcon name={skill} />
                   {skill}
                 </span>
               ))}
