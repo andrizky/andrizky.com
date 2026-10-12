@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { AlertCircle, CheckCircle2, Loader2, Mail, Send, User } from 'lucide-react'
 import { NovaGlowButton } from '../components/NovaGlowButton'
 import { pick, useLanguage } from '../context/LanguageContext'
-import { CONTACT_WEBHOOK_URL, socials, ui } from '../data/content'
+import { CONTACT_WEBHOOK_URL, ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
@@ -102,14 +102,6 @@ export function Contact() {
             {pick(lang, ui.contact.subtitle)}
           </p>
 
-          <a
-            href={`mailto:${socials.email}`}
-            className="group mt-6 inline-flex items-center gap-3 font-mono text-sm text-neon-blue transition-colors hover:text-neon-purple"
-          >
-            <Mail size={16} className="transition-transform group-hover:-translate-y-0.5" />
-            {socials.email}
-          </a>
-
           {/* decorative terminal card */}
           <div className="gradient-border card-glow mt-10 max-w-sm rounded-xl p-1">
             <div className="rounded-lg bg-surface p-4 font-mono text-xs leading-relaxed">
@@ -166,7 +158,7 @@ export function Contact() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder={pick(lang, inputProps.name.placeholder)}
-                    className={`${fieldClass(!!errors.name)} pl-10`}
+                    className={`${fieldClass(!!errors.name)} contact-field-icon`}
                     maxLength={100}
                   />
                 </div>
@@ -188,7 +180,7 @@ export function Contact() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder={pick(lang, inputProps.email.placeholder)}
-                    className={`${fieldClass(!!errors.email)} pl-10`}
+                    className={`${fieldClass(!!errors.email)} contact-field-icon`}
                     maxLength={150}
                   />
                 </div>

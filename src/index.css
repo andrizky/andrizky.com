@@ -180,6 +180,11 @@ body {
   color: var(--color-text-muted);
 }
 
+/* variant for fields with a leading icon */
+.contact-field-icon {
+  padding-left: 2.5rem;
+}
+
 .contact-field:focus {
   outline: none;
   border-color: rgba(56, 189, 248, 0.6);
