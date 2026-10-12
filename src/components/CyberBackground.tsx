@@ -130,6 +130,33 @@ export function CyberBackground() {
         />
       </ParallaxLayer>
 
+      <ParallaxLayer px={orbPX} py={orbPY} depth={90} className="absolute inset-0">
+        <motion.div
+          className="absolute top-[5%] left-[20%] h-[15rem] w-[15rem] rounded-full blur-[80px]"
+          style={{ background: 'radial-gradient(closest-side, rgba(129,140,248,0.15), transparent)' }}
+          animate={{ opacity: [0.35, 0.65, 0.35], y: [0, 22, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </ParallaxLayer>
+
+      <ParallaxLayer px={orbPX} py={orbPY} depth={-80} className="absolute inset-0">
+        <motion.div
+          className="absolute top-[35%] right-[25%] h-[16rem] w-[16rem] rounded-full blur-[90px]"
+          style={{ background: 'radial-gradient(closest-side, rgba(56,189,248,0.13), transparent)' }}
+          animate={{ opacity: [0.3, 0.6, 0.3], y: [0, -25, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </ParallaxLayer>
+
+      <ParallaxLayer px={orbPX} py={orbPY} depth={30} className="absolute inset-0">
+        <motion.div
+          className="absolute top-[75%] right-[45%] h-[14rem] w-[14rem] rounded-full blur-[80px]"
+          style={{ background: 'radial-gradient(closest-side, rgba(236,72,153,0.11), transparent)' }}
+          animate={{ opacity: [0.3, 0.55, 0.3], x: [0, 20, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </ParallaxLayer>
+
       {/* cursor spotlight — soft glow trailing the pointer */}
       <motion.div
         className="absolute top-0 left-0 h-[52rem] w-[52rem] rounded-full"
