@@ -22,7 +22,7 @@ export function Magnetic({ children, strength = 0.3, className = 'inline-block' 
   const sy = useSpring(y, { stiffness: 180, damping: 14, mass: 0.4 })
 
   const onMove = (e: MouseEvent) => {
-    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
+    if (reduced) return
     const rect = ref.current?.getBoundingClientRect()
     if (!rect) return
     x.set((e.clientX - (rect.left + rect.width / 2)) * strength)

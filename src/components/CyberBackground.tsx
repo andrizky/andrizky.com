@@ -43,10 +43,12 @@ export function CyberBackground() {
   const gridRotateY = useTransform(orbPX, (v) => v * 2.5)
 
   useEffect(() => {
-    // only track the cursor on devices that actually have one
-    const hasPointer = window.matchMedia('(pointer: fine)').matches
+    // Listen for real pointer events instead of trusting `(pointer: fine)` —
+    // some touchscreen laptops report touch as the primary pointer even with
+    // a mouse connected. No pointer events = no movement, which is the
+    // natural degradation on actual touch-only devices.
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!hasPointer || prefersReduced) return
+    if (prefersReduced) return
 
     const onMove = (e: PointerEvent) => {
       cursorX.set(e.clientX)

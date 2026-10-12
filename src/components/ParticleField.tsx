@@ -17,15 +17,17 @@ const LINK_DISTANCE = 100 // px — faint lines between nearby particles
 /**
  * Canvas particle field: slow-drifting neon dots that flee from the
  * cursor and link to nearby neighbors (constellation style).
- * Pure canvas — zero React re-renders, skipped on touch/reduced-motion.
+ * Pure canvas — zero React re-renders. Drift + links always run;
+ * cursor repulsion activates whenever pointer events fire.
  */
 export function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const hasPointer = window.matchMedia('(pointer: fine)').matches
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!hasPointer || prefersReduced) return
+    // Respect the user's motion preference, but never skip based on
+    // `(pointer: fine)` — touchscreen laptops report touch as the primary
+    // pointer even with a mouse connected.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const canvas = canvasRef.current
     if (!canvas) return

@@ -17,7 +17,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   const sRotateY = useSpring(rotateY, { stiffness: 200, damping: 20 })
 
   const onTilt = (e: MouseEvent<HTMLElement>) => {
-    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
+    if (reduced) return
     const rect = e.currentTarget.getBoundingClientRect()
     const px = (e.clientX - rect.left) / rect.width - 0.5
     const py = (e.clientY - rect.top) / rect.height - 0.5
