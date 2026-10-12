@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { ParticleField } from './ParticleField'
 
 interface ParallaxLayerProps {
   px: ReturnType<typeof useSpring>
@@ -66,6 +67,9 @@ export function CyberBackground() {
       >
         <div className="cyber-grid absolute inset-0" />
       </motion.div>
+
+      {/* particle field — neon dots that flee the cursor */}
+      <ParticleField />
 
       {/* glow orbs — each at a different parallax depth */}
       <ParallaxLayer px={orbPX} py={orbPY} depth={24} className="absolute inset-0">
