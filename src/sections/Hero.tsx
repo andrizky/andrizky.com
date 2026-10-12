@@ -54,7 +54,7 @@ export function Hero() {
   const typed = useTypewriter(roles)
 
   return (
-    <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20">
+    <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20 pb-28">
       <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl text-center">
         {/* avatar + name row */}
         <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
@@ -178,7 +178,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-8 flex flex-col items-center gap-1 text-text-muted transition-colors hover:text-neon-blue"
+        className="absolute bottom-8 hidden min-[700px]:flex flex-col items-center gap-1 text-text-muted transition-colors hover:text-neon-blue"
       >
         <span className="font-mono text-[10px] tracking-[0.25em] uppercase">
           {pick(lang, ui.hero.scroll)}
