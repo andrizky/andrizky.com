@@ -175,17 +175,19 @@ export const ui = {
     title: { en: 'About Me', id: 'Tentang Saya' },
     paragraphs: {
       en: [
-        "I'm a developer based in Indonesia who loves crafting things for the web. My journey started with curiosity about how websites work — and it turned into a passion for building clean, performant and delightful products.",
-        'These days I focus on React, TypeScript and the modern web ecosystem. I care deeply about user experience, code quality and the small details that make a product feel alive.',
+        'I build things that work — and then make them work smarter.',
+        'As a Full-Stack Developer and AI Automation Engineer, I specialize in scalable web apps and intelligent workflows. But my toolkit goes deeper: UI/UX design, spreadsheet formula engineering, team leadership, and even FTTH network construction. Different domains, same approach — understand the system, then improve it.',
+        "Right now I'm running all of it in parallel — shipping web platforms, designing interfaces, building AI-powered automations, and leading projects side by side. For me it's never one or the other; it's all of it, at once.",
       ],
       id: [
-        'Saya seorang developer dari Indonesia yang senang membuat sesuatu untuk web. Perjalanan saya dimulai dari rasa penasaran bagaimana website bekerja — dan berubah menjadi hasrat untuk membangun produk yang bersih, cepat, dan menyenangkan.',
-        'Saat ini saya fokus pada React, TypeScript dan ekosistem web modern. Saya peduli pada pengalaman pengguna, kualitas kode, dan detail kecil yang membuat produk terasa hidup.',
+        'Saya membangun sesuatu yang berfungsi — lalu membuatnya bekerja lebih cerdas.',
+        'Sebagai Full-Stack Developer dan AI Automation Engineer, saya berfokus pada aplikasi web yang scalable dan workflow cerdas. Tapi toolkit saya lebih dalam: desain UI/UX, rekayasa formula spreadsheet, kepemimpinan tim, bahkan konstruksi jaringan FTTH. Domain yang berbeda, pendekatan yang sama — pahami sistemnya, lalu tingkatkan.',
+        'Saat ini saya menjalankan semuanya secara paralel — membangun platform web, mendesain antarmuka, membuat automasi berbasis AI, dan memimpin proyek, berjalan berdampingan. Bagi saya bukan memilih salah satu; semuanya, sekaligus.',
       ],
     },
     highlights: {
-      en: ['Clean code', 'Pixel-perfect UI', 'Performance', 'Continuous learning'],
-      id: ['Kode bersih', 'UI presisi', 'Performa', 'Terus belajar'],
+      en: ['Full-Stack', 'AI Automation', 'UI/UX Design', 'Leadership', 'Formula Expert', 'FTTH Network'],
+      id: ['Full-Stack', 'AI Automation', 'Desain UI/UX', 'Kepemimpinan', 'Ahli Formula', 'Jaringan FTTH'],
     },
   },
   projects: {

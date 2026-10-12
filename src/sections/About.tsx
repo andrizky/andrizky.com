@@ -1,10 +1,7 @@
 import { motion } from 'motion/react'
-import { Code2, Layout, Sparkles, Zap } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
-
-const icons = [Sparkles, Code2, Zap, Layout]
 
 export function About() {
   const { lang } = useLanguage()
@@ -29,17 +26,16 @@ export function About() {
             </p>
           ))}
 
-          {/* highlights */}
-          <ul className="grid grid-cols-2 gap-3 pt-4">
-            {highlights.map((h, i) => {
-              const Icon = icons[i % icons.length]
-              return (
-                <li key={h} className="flex items-center gap-3 font-mono text-sm text-text-secondary">
-                  <Icon size={15} className="shrink-0 text-neon-blue" />
-                  {h}
-                </li>
-              )
-            })}
+          {/* highlights — neon chips */}
+          <ul className="flex flex-wrap gap-2.5 pt-4">
+            {highlights.map((h) => (
+              <li
+                key={h}
+                className="cursor-default rounded-full border border-line bg-surface-light/80 px-3.5 py-1.5 font-mono text-xs text-text-secondary transition-all hover:-translate-y-0.5 hover:border-neon-blue/60 hover:text-neon-blue hover:shadow-[0_0_16px_rgba(56,189,248,0.25)]"
+              >
+                {h}
+              </li>
+            ))}
           </ul>
         </motion.div>
 
@@ -58,11 +54,26 @@ export function About() {
               <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
               <span className="ml-2 text-text-muted">~/portfolio</span>
             </div>
-            <p><span className="text-neon-purple">const</span> <span className="text-neon-blue">dev</span> <span className="text-text-muted">=</span> {'{'}</p>
-            <p className="pl-4">name: <span className="text-green-400">'Andri'</span>,</p>
-            <p className="pl-4">stack: [<span className="text-green-400">'React'</span>, <span className="text-green-400">'TS'</span>],</p>
-            <p className="pl-4">focus: <span className="text-green-400">'UI/UX'</span>,</p>
-            <p className="pl-4">coffee: <span className="text-neon-pink">Infinity</span>,</p>
+            <p>
+              <span className="text-neon-purple">const</span>{' '}
+              <span className="text-neon-blue">andri</span>{' '}
+              <span className="text-text-muted">=</span> {'{'}
+            </p>
+            <p className="pl-4">
+              role:{' '}
+              <span className="text-green-400">'Full-Stack + AI Automation'</span>,
+            </p>
+            <p className="pl-4">
+              also: [<span className="text-green-400">'Leader'</span>,{' '}
+              <span className="text-green-400">'Designer'</span>,{' '}
+              <span className="text-green-400">'Network Eng'</span>],
+            </p>
+            <p className="pl-4">
+              mode: <span className="text-green-400">'all-at-once'</span>,
+            </p>
+            <p className="pl-4">
+              coffee: <span className="text-neon-pink">Infinity</span>,
+            </p>
             <p>{'}'};</p>
           </div>
         </motion.div>
