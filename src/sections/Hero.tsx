@@ -1,0 +1,149 @@
+import { useEffect, useState } from 'react'
+import { motion } from 'motion/react'
+import { ChevronDown, FolderGit2, Mail } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from '../components/icons'
+import { pick, useLanguage } from '../context/LanguageContext'
+import { socials, ui } from '../data/content'
+import { scrollToSection } from '../lib/scroll'
+
+function useTypewriter(words: string[], speed = 75, pause = 1800) {
+  const [text, setText] = useState('')
+  const [wordIndex, setWordIndex] = useState(0)
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    setText('')
+    setWordIndex(0)
+    setDeleting(false)
+  }, [words])
+
+  useEffect(() => {
+    const word = words[wordIndex % words.length]
+    let timeout: ReturnType<typeof setTimeout>
+
+    if (!deleting && text === word) {
+      timeout = setTimeout(() => setDeleting(true), pause)
+    } else if (deleting && text === '') {
+      setDeleting(false)
+      setWordIndex((i) => (i + 1) % words.length)
+    } else {
+      timeout = setTimeout(
+        () => setText(word.slice(0, text.length + (deleting ? -1 : 1))),
+        deleting ? speed / 2 : speed,
+      )
+    }
+    return () => clearTimeout(timeout)
+  }, [text, deleting, wordIndex, words, speed, pause])
+
+  return text
+}
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.2 } },
+}
+const item = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+}
+
+export function Hero() {
+  const { lang } = useLanguage()
+  const roles = ui.hero.roles[lang]
+  const typed = useTypewriter(roles)
+
+  return (
+    <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6">
+      <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl text-center">
+        {/* status badge */}
+        <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5">
+          <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot" />
+          <span className="font-mono text-xs text-text-secondary">{pick(lang, ui.hero.available)}</span>
+        </motion.div>
+
+        <motion.p variants={item} className="mb-4 font-mono text-lg text-neon-blue">
+          {pick(lang, ui.hero.greeting)}
+        </motion.p>
+
+        {/* name */}
+        <motion.h1
+          variants={item}
+          className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-8xl"
+        >
+          <span className="text-gradient text-glow-purple">Andri Rizky</span>
+          <br />
+          <span className="text-text-primary">Prayogo</span>
+        </motion.h1>
+
+        {/* typewriter role */}
+        <motion.div variants={item} className="mt-6 flex items-center justify-center gap-2 font-mono text-lg sm:text-2xl">
+          <span className="text-text-secondary">&gt;</span>
+          <span className="text-neon-blue text-glow-blue">{typed}</span>
+          <span className="inline-block h-6 w-[2px] animate-pulse bg-neon-purple sm:h-7" />
+        </motion.div>
+
+        <motion.p variants={item} className="mx-auto mt-8 max-w-2xl leading-relaxed text-text-secondary">
+          {pick(lang, ui.hero.tagline)}
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div variants={item} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={() => scrollToSection('#projects')}
+            className="neon-button rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-6 py-3 text-white shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_36px_rgba(168,85,247,0.5)]"
+          >
+            <FolderGit2 size={16} />
+            {pick(lang, ui.hero.viewWork)}
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('#contact')}
+            className="neon-button rounded-lg border border-neon-blue/40 bg-surface/60 px-6 py-3 text-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
+          >
+            <Mail size={16} />
+            {pick(lang, ui.hero.contactMe)}
+          </button>
+        </motion.div>
+
+        {/* socials */}
+        <motion.div variants={item} className="mt-10 flex justify-center gap-3">
+          {[
+            { href: socials.github, icon: GithubIcon, label: 'GitHub' },
+            { href: socials.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
+            { href: `mailto:${socials.email}`, icon: Mail, label: 'Email' },
+          ].map(({ href, icon: Icon, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={label}
+              className="rounded-lg border border-line bg-surface/60 p-2.5 text-text-secondary transition-all hover:-translate-y-1 hover:border-neon-purple/60 hover:text-neon-purple hover:shadow-[0_0_20px_rgba(168,85,247,0.25)]"
+            >
+              <Icon size={20} />
+            </a>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* scroll hint */}
+      <motion.button
+        type="button"
+        onClick={() => scrollToSection('#about')}
+        aria-label={pick(lang, ui.hero.scroll)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+        className="absolute bottom-8 flex flex-col items-center gap-1 text-text-muted transition-colors hover:text-neon-blue"
+      >
+        <span className="font-mono text-[10px] tracking-[0.25em] uppercase">
+          {pick(lang, ui.hero.scroll)}
+        </span>
+        <motion.span animate={{ y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
+          <ChevronDown size={18} />
+        </motion.span>
+      </motion.button>
+    </section>
+  )
+}
