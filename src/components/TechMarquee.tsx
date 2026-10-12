@@ -20,14 +20,16 @@ function Row({ hidden }: { hidden?: boolean }) {
 /** Infinite tech-stack marquee (pure CSS animation, duplicated list for a seamless loop). */
 export function TechMarquee() {
   return (
-    <div className="relative overflow-hidden py-6">
-      <div className="animate-marquee flex w-max">
-        <Row />
-        <Row hidden />
+    <div className="mx-auto max-w-6xl px-6">
+      <div className="relative overflow-hidden py-6">
+        <div className="animate-marquee flex w-max">
+          <Row />
+          <Row hidden />
+        </div>
+        {/* edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
       </div>
-      {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
     </div>
   )
 }
