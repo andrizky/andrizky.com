@@ -63,11 +63,17 @@ export function About() {
               role:{' '}
               <span className="text-green-400">'Full-Stack + AI Automation'</span>,
             </p>
-            <p className="pl-4">
-              also: [<span className="text-green-400">'Leader'</span>,{' '}
-              <span className="text-green-400">'Designer'</span>,{' '}
-              <span className="text-green-400">'Network Engineer'</span>],
+            <p className="pl-4">also: [</p>
+            <p className="pl-8">
+              <span className="text-green-400">'Leader'</span>,
             </p>
+            <p className="pl-8">
+              <span className="text-green-400">'Designer'</span>,
+            </p>
+            <p className="pl-8">
+              <span className="text-green-400">'Network Engineer'</span>,
+            </p>
+            <p className="pl-4">],</p>
             <p className="pl-4">
               mode: <span className="text-green-400">'all-at-once'</span>,
             </p>
