@@ -152,6 +152,162 @@ body {
   transform: translateY(-2px);
 }
 
+/* ---- Nova Glow Button (recreation of the Framer Marketplace component) ---- */
+.nova-glow-btn {
+  --edge-size: 2px;
+  --aura-size: -14px;
+  --aura-blur: 16px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 140px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgb(7, 7, 17);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  clip-path: inset(0 round 999px);
+  box-shadow:
+    0 0 10px rgba(99, 102, 241, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.22s ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.nova-glow-btn:hover {
+  border-color: rgba(168, 85, 247, 0.45);
+  box-shadow:
+    0 0 22px rgba(139, 92, 246, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: scale(var(--nova-hover-scale, 1.04));
+}
+
+.nova-glow-btn:active {
+  transform: scale(calc(var(--nova-hover-scale, 1.04) * 0.97));
+}
+
+/* layer 1: rotating conic gradient masked to a thin border ring */
+.nova-glow-edge {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: var(--edge-size);
+  background: conic-gradient(
+    from var(--nova-glow-rotation, 0deg),
+    #1e3a8a 0deg,
+    #a855f7 70deg,
+    #38bdf8 135deg,
+    transparent 190deg,
+    #1e3a8a 260deg,
+    #a855f7 360deg
+  );
+  opacity: 0.9;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: 1;
+}
+
+/* layer 2: blurred neon aura outside the button */
+.nova-glow-aura {
+  position: absolute;
+  inset: var(--aura-size);
+  border-radius: 999px;
+  background: conic-gradient(
+    from var(--nova-glow-rotation, 0deg),
+    transparent 0deg,
+    #a855f7 72deg,
+    #38bdf8 135deg,
+    transparent 210deg,
+    #3b82f6 290deg,
+    transparent 360deg
+  );
+  opacity: 0.5;
+  filter: blur(var(--aura-blur));
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
+  z-index: 0;
+}
+
+.nova-glow-btn:hover .nova-glow-aura {
+  opacity: 0.7;
+  filter: blur(var(--aura-blur)) saturate(1.2);
+}
+
+/* layer 3: diagonal shine sweep on hover */
+.nova-glow-shine {
+  position: absolute;
+  inset: var(--edge-size);
+  border-radius: 999px;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 35%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.03) 65%,
+    transparent 100%
+  );
+  transform: translateX(-38%);
+  opacity: 0.45;
+  pointer-events: none;
+  transition:
+    transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease;
+  z-index: 2;
+}
+
+.nova-glow-btn:hover .nova-glow-shine {
+  transform: translateX(38%);
+  opacity: 0.6;
+}
+
+/* layer 4: label */
+.nova-glow-content {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-glow-btn,
+  .nova-glow-btn:hover,
+  .nova-glow-btn:active {
+    transform: none;
+  }
+
+  .nova-glow-shine,
+  .nova-glow-btn:hover .nova-glow-shine {
+    transform: translateX(-38%);
+  }
+}
+
 /* respect reduced motion for CSS-driven loops */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {

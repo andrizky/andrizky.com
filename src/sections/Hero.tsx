@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ChevronDown, FolderGit2, Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '../components/icons'
-import { Magnetic } from '../components/Magnetic'
+import { NovaGlowButton } from '../components/NovaGlowButton'
 import avatarImg from '../assets/avatar.jpeg'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { socials, ui } from '../data/content'
@@ -126,26 +126,14 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div variants={item} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Magnetic>
-            <button
-              type="button"
-              onClick={() => scrollToSection('#projects')}
-              className="neon-button rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-6 py-3 text-white shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_36px_rgba(168,85,247,0.5)]"
-            >
-              <FolderGit2 size={16} />
-              {pick(lang, ui.hero.viewWork)}
-            </button>
-          </Magnetic>
-          <Magnetic>
-            <button
-              type="button"
-              onClick={() => scrollToSection('#contact')}
-              className="neon-button rounded-lg border border-neon-blue/40 bg-surface/60 px-6 py-3 text-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
-            >
-              <Mail size={16} />
-              {pick(lang, ui.hero.contactMe)}
-            </button>
-          </Magnetic>
+          <NovaGlowButton onClick={() => scrollToSection('#projects')}>
+            <FolderGit2 size={16} />
+            {pick(lang, ui.hero.viewWork)}
+          </NovaGlowButton>
+          <NovaGlowButton onClick={() => scrollToSection('#contact')}>
+            <Mail size={16} />
+            {pick(lang, ui.hero.contactMe)}
+          </NovaGlowButton>
         </motion.div>
 
         {/* status badge */}
