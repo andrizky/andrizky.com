@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { AlertCircle, CheckCircle2, Loader2, Mail, Send, User } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Loader2, Mail, Phone, Send, User } from 'lucide-react'
 import { NovaGlowButton } from '../components/NovaGlowButton'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { CONTACT_WEBHOOK_URL, ui } from '../data/content'
@@ -22,7 +22,7 @@ export function Contact() {
 
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<FormErrors>({})
-  const [form, setForm] = useState({ name: '', email: '', message: '', website: '' }) // website = honeypot
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', website: '' }) // website = honeypot
 
   const validate = (): FormErrors => {
     const next: FormErrors = {}
@@ -58,6 +58,7 @@ export function Contact() {
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim(),
+          phone: form.phone.trim(),
           message: form.message.trim(),
           meta: {
             source: 'portfolio',
@@ -71,7 +72,7 @@ export function Contact() {
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setStatus('success')
-      setForm({ name: '', email: '', message: '', website: '' })
+      setForm({ name: '', email: '', phone: '', message: '', website: '' })
     } catch {
       setStatus('error')
     }
@@ -83,6 +84,7 @@ export function Contact() {
   const inputProps = {
     name: { label: t.name, placeholder: t.namePlaceholder },
     email: { label: t.email, placeholder: t.emailPlaceholder },
+    phone: { label: t.phone, placeholder: t.phonePlaceholder },
     message: { label: t.message, placeholder: t.messagePlaceholder },
   }
 
@@ -114,7 +116,7 @@ export function Contact() {
               <p>
                 <span className="text-neon-purple">$</span>{' '}
                 <span className="text-text-secondary">ping</span>{' '}
-                <span className="text-neon-blue">andri</span>
+                <span className="text-neon-blue">andrizky</span>
               </p>
               <p className="text-green-400">→ reply_time: fast ⚡</p>
               <p className="text-green-400">→ status: open_to_work</p>
@@ -185,6 +187,27 @@ export function Contact() {
                   />
                 </div>
                 {errors.email && <p className="contact-error">{errors.email}</p>}
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="contact-phone" className="contact-label">
+                {'//'} {pick(lang, inputProps.phone.label)}
+              </label>
+              <div className="relative">
+                <Phone
+                  size={15}
+                  className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-text-muted"
+                />
+                <input
+                  id="contact-phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder={pick(lang, inputProps.phone.placeholder)}
+                  className={fieldClass(false) + ' contact-field-icon'}
+                  maxLength={30}
+                />
               </div>
             </div>
 

@@ -192,6 +192,8 @@ export const ui = {
       namePlaceholder: { en: 'John Doe', id: 'Si Namamu' },
       email: { en: 'your email', id: 'emailmu' },
       emailPlaceholder: { en: 'john@example.com', id: 'si@example.com' },
+      phone: { en: 'phone / whatsapp', id: 'telepon / whatsapp' },
+      phonePlaceholder: { en: '+62 812 3456 789', id: '+62 812 3456 789' },
       message: { en: 'your message', id: 'pesanmu' },
       messagePlaceholder: {
         en: "Tell me about your project or just say hi...",
