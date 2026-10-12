@@ -108,7 +108,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-7xl lg:text-8xl"
             >
-              <span className="text-gradient text-glow-purple name-flow">Andri Rizky P</span>
+              <span className="text-gradient text-glow-purple">Andri Rizky P</span>
             </motion.h1>
 
             {/* typewriter role */}
