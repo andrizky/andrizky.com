@@ -1,5 +1,12 @@
 import { Heart, Mail } from 'lucide-react'
-import { GithubIcon, InstagramIcon, LinkedinIcon } from './icons'
+import {
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  TelegramIcon,
+  WhatsappIcon,
+  XIcon,
+} from './icons'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { socials, ui } from '../data/content'
 import { scrollToSection } from '../lib/scroll'
@@ -7,7 +14,10 @@ import { scrollToSection } from '../lib/scroll'
 const links = [
   { href: socials.github, icon: GithubIcon, label: 'GitHub' },
   { href: socials.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
+  { href: socials.telegram, icon: TelegramIcon, label: 'Telegram' },
+  { href: socials.whatsapp, icon: WhatsappIcon, label: 'WhatsApp' },
   { href: socials.instagram, icon: InstagramIcon, label: 'Instagram' },
+  { href: socials.twitter, icon: XIcon, label: 'X (Twitter)' },
   { href: `mailto:${socials.email}`, icon: Mail, label: 'Email' },
 ]
 

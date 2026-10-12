@@ -21,7 +21,10 @@ export const socials = {
   email: 'andrizkyy@gmail.com',
   github: 'https://github.com/andrizky/',
   linkedin: 'http://linkedin.com/in/andrizky',
-  instagram: 'https://instagram.com/andrizky',
+  telegram: 'https://t.me/andrizky',
+  whatsapp: 'https://wa.me/628113241666',
+  instagram: 'https://instagram.com/andrizkyyy',
+  twitter: 'https://x.com/andrizkyyy',
 }
 
 export const projects: Project[] = [

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ChevronDown, FolderGit2, Mail } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from '../components/icons'
+import { GithubIcon, LinkedinIcon, TelegramIcon, WhatsappIcon, InstagramIcon, XIcon } from '../components/icons'
 import { NovaGlowButton } from '../components/NovaGlowButton'
 import avatarImg from '../assets/avatar.jpeg'
 import { pick, useLanguage } from '../context/LanguageContext'
@@ -147,10 +147,14 @@ export function Hero() {
         </motion.div>
 
         {/* socials */}
-        <motion.div variants={item} className="mt-6 flex justify-center gap-3">
+        <motion.div variants={item} className="mt-6 flex flex-wrap justify-center gap-3">
           {[
             { href: socials.github, icon: GithubIcon, label: 'GitHub' },
             { href: socials.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
+            { href: socials.telegram, icon: TelegramIcon, label: 'Telegram' },
+            { href: socials.whatsapp, icon: WhatsappIcon, label: 'WhatsApp' },
+            { href: socials.instagram, icon: InstagramIcon, label: 'Instagram' },
+            { href: socials.twitter, icon: XIcon, label: 'X (Twitter)' },
             { href: `mailto:${socials.email}`, icon: Mail, label: 'Email' },
           ].map(({ href, icon: Icon, label }) => (
             <a
