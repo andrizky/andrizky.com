@@ -56,7 +56,7 @@ export function About() {
             </div>
             <p>
               <span className="text-neon-purple">const</span>{' '}
-              <span className="text-neon-blue">andri</span>{' '}
+              <span className="text-neon-blue">andrizky</span>{' '}
               <span className="text-text-muted">=</span> {'{'}
             </p>
             <p className="pl-4">
@@ -66,7 +66,7 @@ export function About() {
             <p className="pl-4">
               also: [<span className="text-green-400">'Leader'</span>,{' '}
               <span className="text-green-400">'Designer'</span>,{' '}
-              <span className="text-green-400">'Network Eng'</span>],
+              <span className="text-green-400">'Network Engineer'</span>],
             </p>
             <p className="pl-4">
               mode: <span className="text-green-400">'all-at-once'</span>,
