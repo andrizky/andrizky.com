@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import { Send } from 'lucide-react'
 import { GithubIcon, InstagramIcon, LinkedinIcon } from '../components/icons'
+import { Magnetic } from '../components/Magnetic'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { socials, ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
@@ -26,13 +27,15 @@ export function Contact() {
       >
         <p className="leading-relaxed text-text-secondary">{pick(lang, ui.contact.subtitle)}</p>
 
-        <a
-          href={`mailto:${socials.email}`}
-          className="neon-button mt-10 rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-8 py-4 text-base text-white shadow-[0_0_28px_rgba(99,102,241,0.35)] hover:shadow-[0_0_44px_rgba(168,85,247,0.55)]"
-        >
-          <Send size={16} />
-          {pick(lang, ui.contact.button)}
-        </a>
+        <Magnetic strength={0.25}>
+          <a
+            href={`mailto:${socials.email}`}
+            className="neon-button mt-10 rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-8 py-4 text-base text-white shadow-[0_0_28px_rgba(99,102,241,0.35)] hover:shadow-[0_0_44px_rgba(168,85,247,0.55)]"
+          >
+            <Send size={16} />
+            {pick(lang, ui.contact.button)}
+          </a>
+        </Magnetic>
 
         <p className="mt-8 font-mono text-sm text-text-muted">
           {'//'} {socials.email}

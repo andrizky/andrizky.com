@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { ui } from '../data/content'
@@ -12,7 +12,15 @@ const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'
 export function Navbar() {
   const { lang } = useLanguage()
   const [open, setOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const active = useActiveSection([...SECTIONS])
+
+  // hide when scrolling down, reveal when scrolling up
+  const { scrollY } = useScroll()
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const prev = scrollY.getPrevious() ?? 0
+    setHidden(y > prev && y > 140)
+  })
 
   const go = (id: string) => {
     setOpen(false)
@@ -20,7 +28,11 @@ export function Navbar() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-bg/70 backdrop-blur-md">
+    <motion.header
+      animate={{ y: hidden ? '-100%' : '0%' }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-bg/70 backdrop-blur-md"
+    >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* logo */}
         <button
@@ -102,6 +114,6 @@ export function Navbar() {
           </motion.ul>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   )
 }

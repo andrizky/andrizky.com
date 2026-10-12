@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { ChevronDown, FolderGit2, Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '../components/icons'
+import { Magnetic } from '../components/Magnetic'
 import avatarImg from '../assets/avatar.jpeg'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { socials, ui } from '../data/content'
@@ -50,6 +51,7 @@ const item = {
 
 export function Hero() {
   const { lang } = useLanguage()
+  const reduced = useReducedMotion()
   const roles = ui.hero.roles[lang]
   const typed = useTypewriter(roles)
 
@@ -100,9 +102,14 @@ export function Hero() {
               {pick(lang, ui.hero.greeting)}
             </p>
 
-            <h1 className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-7xl lg:text-8xl">
+            <motion.h1
+              initial={reduced ? false : { opacity: 0, y: 44, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-7xl lg:text-8xl"
+            >
               <span className="text-gradient text-glow-purple">Andri Rizky P</span>
-            </h1>
+            </motion.h1>
 
             {/* typewriter role */}
             <div className="mt-4 flex items-center justify-center gap-2 font-mono text-lg sm:text-2xl md:justify-start">
@@ -119,22 +126,26 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div variants={item} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <button
-            type="button"
-            onClick={() => scrollToSection('#projects')}
-            className="neon-button rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-6 py-3 text-white shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_36px_rgba(168,85,247,0.5)]"
-          >
-            <FolderGit2 size={16} />
-            {pick(lang, ui.hero.viewWork)}
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('#contact')}
-            className="neon-button rounded-lg border border-neon-blue/40 bg-surface/60 px-6 py-3 text-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
-          >
-            <Mail size={16} />
-            {pick(lang, ui.hero.contactMe)}
-          </button>
+          <Magnetic>
+            <button
+              type="button"
+              onClick={() => scrollToSection('#projects')}
+              className="neon-button rounded-lg bg-gradient-to-r from-neon-blue-deep to-neon-purple px-6 py-3 text-white shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_36px_rgba(168,85,247,0.5)]"
+            >
+              <FolderGit2 size={16} />
+              {pick(lang, ui.hero.viewWork)}
+            </button>
+          </Magnetic>
+          <Magnetic>
+            <button
+              type="button"
+              onClick={() => scrollToSection('#contact')}
+              className="neon-button rounded-lg border border-neon-blue/40 bg-surface/60 px-6 py-3 text-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
+            >
+              <Mail size={16} />
+              {pick(lang, ui.hero.contactMe)}
+            </button>
+          </Magnetic>
         </motion.div>
 
         {/* status badge */}

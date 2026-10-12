@@ -1,12 +1,34 @@
-import { motion } from 'motion/react'
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react'
 import { ExternalLink } from 'lucide-react'
 import { GithubIcon } from './icons'
+import type { MouseEvent } from 'react'
 import type { Project } from '../data/content'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { ui } from '../data/content'
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { lang } = useLanguage()
+  const reduced = useReducedMotion()
+
+  // 3D tilt toward the cursor
+  const rotateX = useMotionValue(0)
+  const rotateY = useMotionValue(0)
+  const sRotateX = useSpring(rotateX, { stiffness: 200, damping: 20 })
+  const sRotateY = useSpring(rotateY, { stiffness: 200, damping: 20 })
+
+  const onTilt = (e: MouseEvent<HTMLElement>) => {
+    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    rotateY.set(px * 8)
+    rotateX.set(-py * 8)
+  }
+
+  const resetTilt = () => {
+    rotateX.set(0)
+    rotateY.set(0)
+  }
 
   return (
     <motion.article
@@ -14,7 +36,11 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.55, delay: (index % 3) * 0.1, ease: 'easeOut' }}
-      className="card-glow group relative flex flex-col rounded-xl border border-line bg-surface/80 p-6 backdrop-blur-sm"
+      whileHover={reduced ? undefined : { y: -6 }}
+      onMouseMove={onTilt}
+      onMouseLeave={resetTilt}
+      style={{ rotateX: sRotateX, rotateY: sRotateY, transformPerspective: 900 }}
+      className="card-hover-glow group relative flex flex-col rounded-xl border border-line bg-surface/80 p-6 backdrop-blur-sm"
     >
       {/* top row */}
       <div className="mb-4 flex items-start justify-between">
