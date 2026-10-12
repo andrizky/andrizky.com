@@ -6,7 +6,6 @@ import { CyberBackground } from './components/CyberBackground'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { ScrollProgress } from './components/ScrollProgress'
-import { TechMarquee } from './components/TechMarquee'
 import { Hero } from './sections/Hero'
 import { About } from './sections/About'
 import { Projects } from './sections/Projects'
@@ -47,7 +46,6 @@ export default function App() {
         <Projects />
         <Experience />
         <Skills />
-        <TechMarquee />
         <Contact />
       </main>
       <Footer />

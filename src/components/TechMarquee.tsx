@@ -1,10 +1,11 @@
 import iconsData from './skill-icons.json'
 import { skillGroups } from '../data/content'
+import { pick, useLanguage } from '../context/LanguageContext'
 
 /**
  * Maps each skill name (from content.ts) to its extracted brand SVG id.
  * Names not in the map (REST API, AI Agent, Google Apps Script,
- * Google Sheets) fall back to a neon dot.
+ * Google Sheets, Linux) fall back to a neon dot.
  */
 const ICON_MAP: Record<string, keyof typeof iconsData> = {
   React: 'react',
@@ -44,29 +45,42 @@ export function SkillIcon({ name }: { name: string }) {
   )
 }
 
-function MarqueeRow({ skills, reverse }: { skills: string[]; reverse?: boolean }) {
+function MarqueeRow({
+  skills,
+  label,
+  reverse,
+}: {
+  skills: string[]
+  label: string
+  reverse?: boolean
+}) {
   return (
-    <div className="relative overflow-hidden py-1.5">
-      <div
-        className={`animate-marquee flex w-max ${reverse ? '[animation-direction:reverse]' : ''}`}
-      >
-        {[0, 1].map((copy) => (
-          <div
-            key={copy}
-            aria-hidden={copy === 1}
-            className="flex shrink-0 items-center gap-3 pr-3"
-          >
-            {skills.map((skill) => (
-              <span
-                key={skill}
-                className="flex items-center gap-2 rounded-lg border border-line bg-surface/80 px-3 py-1.5 font-mono text-sm whitespace-nowrap text-text-secondary"
-              >
-                <SkillIcon name={skill} />
-                {skill}
-              </span>
-            ))}
-          </div>
-        ))}
+    <div className="py-3">
+      <p className="mb-1.5 font-mono text-xs text-neon-purple">
+        {'//'} {label}
+      </p>
+      <div className="relative overflow-hidden">
+        <div
+          className={`animate-marquee flex w-max ${reverse ? '[animation-direction:reverse]' : ''}`}
+        >
+          {[0, 1].map((copy) => (
+            <div
+              key={copy}
+              aria-hidden={copy === 1}
+              className="flex shrink-0 items-center gap-3 pr-3"
+            >
+              {skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="flex items-center gap-2 rounded-lg border border-line bg-surface/80 px-3 py-1.5 font-mono text-sm whitespace-nowrap text-text-secondary"
+                >
+                  <SkillIcon name={skill} />
+                  {skill}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -74,20 +88,26 @@ function MarqueeRow({ skills, reverse }: { skills: string[]; reverse?: boolean }
 
 /**
  * Tech marquee — one scrolling row per skill group (frontend / backend /
- * tools). The middle row scrolls the opposite direction for depth.
- * Pure CSS, duplicated list per row for a seamless loop.
+ * tools), each with a small mono label. The middle row scrolls the
+ * opposite direction for depth. Pure CSS, duplicated list per row for a
+ * seamless loop.
  */
 export function TechMarquee() {
+  const { lang } = useLanguage()
+
   return (
-    <div className="mx-auto max-w-6xl px-6">
-      <div className="relative py-6">
-        {skillGroups.map((group, i) => (
-          <MarqueeRow key={group.label.en} skills={group.skills} reverse={i % 2 === 1} />
-        ))}
-        {/* edge fades spanning all rows */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
-      </div>
+    <div className="relative">
+      {skillGroups.map((group, i) => (
+        <MarqueeRow
+          key={group.label.en}
+          skills={group.skills}
+          label={pick(lang, group.label)}
+          reverse={i % 2 === 1}
+        />
+      ))}
+      {/* edge fades spanning all rows */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
     </div>
   )
 }
