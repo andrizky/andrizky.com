@@ -1,7 +1,30 @@
-import { motion } from 'motion/react'
+import { useEffect } from 'react'
+import { motion, useMotionValue, useSpring } from 'motion/react'
 
-/** Animated cyberpunk background: grid, glowing orbs, scanline. */
+/** Animated cyberpunk background: grid, glowing orbs, cursor spotlight, scanline. */
 export function CyberBackground() {
+  // raw cursor position (updated on every pointermove, no re-render)
+  const cursorX = useMotionValue(-1000)
+  const cursorY = useMotionValue(-1000)
+
+  // springy followers — the spotlight trails the cursor with a soft lag
+  const spotlightX = useSpring(cursorX, { stiffness: 55, damping: 18, mass: 0.9 })
+  const spotlightY = useSpring(cursorY, { stiffness: 55, damping: 18, mass: 0.9 })
+
+  useEffect(() => {
+    // only track the cursor on devices that actually have one
+    const hasPointer = window.matchMedia('(pointer: fine)').matches
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!hasPointer || prefersReduced) return
+
+    const onMove = (e: PointerEvent) => {
+      cursorX.set(e.clientX)
+      cursorY.set(e.clientY)
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [cursorX, cursorY])
+
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       {/* grid */}
@@ -28,6 +51,19 @@ export function CyberBackground() {
         style={{ background: 'radial-gradient(closest-side, rgba(56,189,248,0.14), transparent)' }}
         animate={{ opacity: [0.4, 0.8, 0.4], x: [0, -30, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* cursor spotlight — soft glow trailing the pointer */}
+      <motion.div
+        className="absolute top-0 left-0 h-[32rem] w-[32rem] rounded-full"
+        style={{
+          x: spotlightX,
+          y: spotlightY,
+          marginLeft: '-16rem',
+          marginTop: '-16rem',
+          background:
+            'radial-gradient(closest-side, rgba(99,102,241,0.20), rgba(168,85,247,0.10) 45%, transparent 72%)',
+        }}
       />
 
       {/* vignette */}
