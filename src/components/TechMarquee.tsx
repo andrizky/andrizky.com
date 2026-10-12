@@ -81,6 +81,9 @@ function MarqueeRow({
             </div>
           ))}
         </div>
+        {/* edge fades — scoped to the badge band only, labels stay clear */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
       </div>
     </div>
   )
@@ -105,9 +108,6 @@ export function TechMarquee() {
           reverse={i % 2 === 1}
         />
       ))}
-      {/* edge fades spanning all rows */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-bg to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-bg to-transparent" />
     </div>
   )
 }
