@@ -52,15 +52,22 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => go(id)}
-                className={`group px-3 py-2 font-mono text-sm transition-colors ${
-                  active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-text-primary'
+                className={`nav-bloom group px-3 py-2 font-mono text-sm transition-colors ${
+                  active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'
                 }`}
               >
-                <span className="mr-1 text-xs text-neon-purple">.</span>
-                {pick(lang, ui.nav[id])}
+                {/* bloom layer — grows from center behind the text */}
+                <span aria-hidden className="nav-bloom-glow" />
+                <span className="relative z-10">
+                  <span className="mr-1 text-xs text-neon-purple">.</span>
+                  {pick(lang, ui.nav[id])}
+                </span>
+                {/* underline — persistent on the active section, faint on hover */}
                 <span
-                  className={`mt-0.5 block h-px bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-300 ${
-                    active === id ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
+                  className={`relative z-10 mt-0.5 block h-px origin-center bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-300 ${
+                    active === id
+                      ? 'scale-x-100 opacity-100'
+                      : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50'
                   }`}
                 />
               </button>
