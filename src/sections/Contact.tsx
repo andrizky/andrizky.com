@@ -144,29 +144,29 @@ export function Contact() {
               aria-hidden="true"
             />
 
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div>
-                <label htmlFor="contact-name" className="contact-label">
-                  {'//'} {pick(lang, inputProps.name.label)}
-                </label>
-                <div className="relative">
-                  <User
-                    size={15}
-                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-text-muted"
-                  />
-                  <input
-                    id="contact-name"
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder={pick(lang, inputProps.name.placeholder)}
-                    className={`${fieldClass(!!errors.name)} contact-field-icon`}
-                    maxLength={100}
-                  />
-                </div>
-                {errors.name && <p className="contact-error">{errors.name}</p>}
+            <div>
+              <label htmlFor="contact-name" className="contact-label">
+                {'//'} {pick(lang, inputProps.name.label)}
+              </label>
+              <div className="relative">
+                <User
+                  size={15}
+                  className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-text-muted"
+                />
+                <input
+                  id="contact-name"
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder={pick(lang, inputProps.name.placeholder)}
+                  className={`${fieldClass(!!errors.name)} contact-field-icon`}
+                  maxLength={100}
+                />
               </div>
+              {errors.name && <p className="contact-error">{errors.name}</p>}
+            </div>
 
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="contact-email" className="contact-label">
                   {'//'} {pick(lang, inputProps.email.label)}
@@ -188,9 +188,8 @@ export function Contact() {
                 </div>
                 {errors.email && <p className="contact-error">{errors.email}</p>}
               </div>
-            </div>
 
-            <div>
+              <div>
               <label htmlFor="contact-phone" className="contact-label">
                 {'//'} {pick(lang, inputProps.phone.label)}
               </label>
@@ -208,6 +207,7 @@ export function Contact() {
                   className={fieldClass(false) + ' contact-field-icon'}
                   maxLength={30}
                 />
+              </div>
               </div>
             </div>
 
