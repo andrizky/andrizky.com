@@ -18,9 +18,9 @@ export interface ExperienceItem {
 }
 
 export const socials = {
-  email: 'andri@example.com',
-  github: 'https://github.com/andrizky',
-  linkedin: 'https://linkedin.com/in/andrizky',
+  email: 'andrizkyy@gmail.com',
+  github: 'https://github.com/andrizky/',
+  linkedin: 'http://linkedin.com/in/andrizky',
   instagram: 'https://instagram.com/andrizky',
 }
 
@@ -125,19 +125,19 @@ export const ui = {
     contact: { en: 'Contact', id: 'Kontak' },
   },
   hero: {
-    available: { en: 'Available for work', id: 'Terbuka untuk kerja' },
+    available: { en: 'Available for Freelance Work', id: 'Terbuka untuk Kerja Freelance' },
     greeting: { en: "Hi, I'm", id: 'Halo, saya' },
     name: 'Andri Rizky P',
     roles: {
-      en: ['Full-Stack Developer', 'Frontend Developer', 'UI Enthusiast'],
-      id: ['Full-Stack Developer', 'Frontend Developer', 'Pecinta UI'],
+      en: ['Software Engineer', 'Full Stack Developer', 'AI Automation Engineer'],
+      id: ['Software Engineer', 'Full Stack Developer', 'AI Automation Engineer'],
     },
     tagline: {
-      en: 'I build fast, beautiful web experiences with modern technologies — turning ideas into pixel-perfect reality.',
-      id: 'Saya membangun pengalaman web yang cepat dan indah dengan teknologi modern — mengubah ide menjadi kenyataan.',
+      en: 'I am a Full-Stack Developer and AI Automation Engineer specializing in building scalable web applications and intelligent workflows that drive efficiency.',
+      id: 'Saya Full-Stack Developer dan AI Automation Engineer yang berfokus membangun aplikasi web scalable dan workflow cerdas yang meningkatkan efisiensi.',
     },
-    viewWork: { en: 'View my work', id: 'Lihat karya saya' },
-    contactMe: { en: 'Contact me', id: 'Hubungi saya' },
+    viewWork: { en: 'Projects', id: 'Proyek' },
+    contactMe: { en: 'Contact Me', id: 'Hubungi Saya' },
     scroll: { en: 'scroll down', id: 'gulir ke bawah' },
   },
   about: {
