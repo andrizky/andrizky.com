@@ -54,72 +54,66 @@ export function Hero() {
   const typed = useTypewriter(roles)
 
   return (
-    <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6">
+    <section id="home" className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20">
       <motion.div variants={container} initial="hidden" animate="show" className="max-w-4xl text-center">
-        {/* avatar */}
-        <motion.div variants={item} className="mb-8 flex justify-center">
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative"
-          >
-            {/* glow underneath */}
-            <div
-              aria-hidden
-              className="absolute inset-0 rounded-full bg-gradient-to-br from-neon-blue/40 to-neon-purple/40 blur-2xl"
-            />
-            {/* rotating gradient ring */}
-            <div
-              aria-hidden
-              className="animate-spin-slow absolute -inset-1.5 rounded-full"
-              style={{ background: 'conic-gradient(from 0deg, #38bdf8, #a855f7, #ec4899, #38bdf8)' }}
-            />
-            {/* dashed orbit */}
-            <div aria-hidden className="absolute -inset-4 rounded-full border border-dashed border-neon-purple/30" />
-            {/* orbiting dot */}
-            <div
-              aria-hidden
-              className="animate-spin-slow absolute -inset-4"
-              style={{ animationDuration: '14s', animationDirection: 'reverse' }}
+        {/* avatar + name row */}
+        <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+          <motion.div variants={item} className="flex justify-center">
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative"
             >
-              <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-blue shadow-[0_0_8px_rgba(56,189,248,0.9)]" />
-            </div>
-            <img
-              src={avatarImg}
-              alt={ui.hero.name}
-              width={160}
-              height={160}
-              className="relative h-28 w-28 rounded-full border-4 border-bg object-cover sm:h-40 sm:w-40"
-            />
+              {/* glow underneath */}
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-full bg-gradient-to-br from-neon-blue/40 to-neon-purple/40 blur-2xl"
+              />
+              {/* rotating gradient ring */}
+              <div
+                aria-hidden
+                className="animate-spin-slow absolute -inset-1.5 rounded-full"
+                style={{ background: 'conic-gradient(from 0deg, #38bdf8, #a855f7, #ec4899, #38bdf8)' }}
+              />
+              {/* dashed orbit */}
+              <div aria-hidden className="absolute -inset-4 rounded-full border border-dashed border-neon-purple/30" />
+              {/* orbiting dot */}
+              <div
+                aria-hidden
+                className="animate-spin-slow absolute -inset-4"
+                style={{ animationDuration: '14s', animationDirection: 'reverse' }}
+              >
+                <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-blue shadow-[0_0_8px_rgba(56,189,248,0.9)]" />
+              </div>
+              <img
+                src={avatarImg}
+                alt={ui.hero.name}
+                width={160}
+                height={160}
+                className="relative h-24 w-24 rounded-full border-4 border-bg object-cover md:h-36 md:w-36"
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        {/* status badge */}
-        <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot" />
-          <span className="font-mono text-xs text-text-secondary">{pick(lang, ui.hero.available)}</span>
-        </motion.div>
+          <motion.div variants={item} className="text-center md:text-left">
+            <p className="font-mono text-lg text-neon-blue">
+              {pick(lang, ui.hero.greeting)}
+            </p>
 
-        <motion.p variants={item} className="mb-4 font-mono text-lg text-neon-blue">
-          {pick(lang, ui.hero.greeting)}
-        </motion.p>
+            <h1 className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-7xl lg:text-8xl">
+              <span className="text-gradient text-glow-purple">Andri Rizky</span>
+              <br />
+              <span className="text-text-primary">Prayogo</span>
+            </h1>
 
-        {/* name */}
-        <motion.h1
-          variants={item}
-          className="font-display text-5xl font-bold tracking-tight sm:text-7xl md:text-8xl"
-        >
-          <span className="text-gradient text-glow-purple">Andri Rizky</span>
-          <br />
-          <span className="text-text-primary">Prayogo</span>
-        </motion.h1>
-
-        {/* typewriter role */}
-        <motion.div variants={item} className="mt-6 flex items-center justify-center gap-2 font-mono text-lg sm:text-2xl">
-          <span className="text-text-secondary">&gt;</span>
-          <span className="text-neon-blue text-glow-blue">{typed}</span>
-          <span className="inline-block h-6 w-[2px] animate-pulse bg-neon-purple sm:h-7" />
-        </motion.div>
+            {/* typewriter role */}
+            <div className="mt-4 flex items-center justify-center gap-2 font-mono text-lg sm:text-2xl md:justify-start">
+              <span className="text-text-secondary">&gt;</span>
+              <span className="text-neon-blue text-glow-blue">{typed}</span>
+              <span className="inline-block h-6 w-[2px] animate-pulse bg-neon-purple sm:h-7" />
+            </div>
+          </motion.div>
+        </div>
 
         <motion.p variants={item} className="mx-auto mt-8 max-w-2xl leading-relaxed text-text-secondary">
           {pick(lang, ui.hero.tagline)}
@@ -145,8 +139,18 @@ export function Hero() {
           </button>
         </motion.div>
 
+        {/* status badge */}
+        <motion.div variants={item} className="mt-8 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse-dot" />
+            <span className="font-mono text-xs text-text-secondary">
+              {pick(lang, ui.hero.available)}
+            </span>
+          </span>
+        </motion.div>
+
         {/* socials */}
-        <motion.div variants={item} className="mt-10 flex justify-center gap-3">
+        <motion.div variants={item} className="mt-6 flex justify-center gap-3">
           {[
             { href: socials.github, icon: GithubIcon, label: 'GitHub' },
             { href: socials.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
