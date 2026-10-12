@@ -1,56 +1,263 @@
-import { motion } from 'motion/react'
-import { Send } from 'lucide-react'
-import { GithubIcon, InstagramIcon, LinkedinIcon } from '../components/icons'
+import { useState, type FormEvent } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { AlertCircle, CheckCircle2, Loader2, Mail, Send, User } from 'lucide-react'
 import { NovaGlowButton } from '../components/NovaGlowButton'
 import { pick, useLanguage } from '../context/LanguageContext'
-import { socials, ui } from '../data/content'
+import { CONTACT_WEBHOOK_URL, socials, ui } from '../data/content'
 import { SectionHeading } from '../components/SectionHeading'
+
+type Status = 'idle' | 'sending' | 'success' | 'error'
+
+interface FormErrors {
+  name?: string
+  email?: string
+  message?: string
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function Contact() {
   const { lang } = useLanguage()
-  const socialLinks = [
-    { href: socials.github, icon: GithubIcon, label: 'GitHub' },
-    { href: socials.linkedin, icon: LinkedinIcon, label: 'LinkedIn' },
-    { href: socials.instagram, icon: InstagramIcon, label: 'Instagram' },
-  ]
+  const t = ui.contact.form
+
+  const [status, setStatus] = useState<Status>('idle')
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [form, setForm] = useState({ name: '', email: '', message: '', website: '' }) // website = honeypot
+
+  const validate = (): FormErrors => {
+    const next: FormErrors = {}
+    if (!form.name.trim()) next.name = pick(lang, t.required)
+    if (!form.email.trim()) next.email = pick(lang, t.required)
+    else if (!EMAIL_RE.test(form.email)) next.email = pick(lang, t.invalidEmail)
+    if (!form.message.trim()) next.message = pick(lang, t.required)
+    return next
+  }
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (status === 'sending') return
+
+    const validation = validate()
+    setErrors(validation)
+    if (Object.keys(validation).length > 0) return
+
+    // honeypot filled → almost certainly a bot; pretend success, send nothing
+    if (form.website) {
+      setStatus('success')
+      return
+    }
+
+    setStatus('sending')
+    try {
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), 10_000)
+
+      const res = await fetch(CONTACT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+          meta: {
+            source: 'portfolio',
+            locale: lang,
+            submittedAt: new Date().toISOString(),
+          },
+        }),
+        signal: controller.signal,
+      })
+      clearTimeout(timeout)
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setStatus('success')
+      setForm({ name: '', email: '', message: '', website: '' })
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const fieldClass = (hasError: boolean) =>
+    `contact-field ${hasError ? 'contact-field-error' : ''}`
+
+  const inputProps = {
+    name: { label: t.name, placeholder: t.namePlaceholder },
+    email: { label: t.email, placeholder: t.emailPlaceholder },
+    message: { label: t.message, placeholder: t.messagePlaceholder },
+  }
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-6 py-28">
       <SectionHeading id="contact" index="05" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="mx-auto max-w-2xl text-center"
-      >
-        <p className="leading-relaxed text-text-secondary">{pick(lang, ui.contact.subtitle)}</p>
+      <div className="grid gap-12 md:grid-cols-2 md:gap-10">
+        {/* left — pitch */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <p className="max-w-md leading-relaxed text-text-secondary">
+            {pick(lang, ui.contact.subtitle)}
+          </p>
 
-        <NovaGlowButton onClick={() => window.open(`mailto:${socials.email}`, '_self')}>
-          <Send size={16} />
-          {pick(lang, ui.contact.button)}
-        </NovaGlowButton>
+          <a
+            href={`mailto:${socials.email}`}
+            className="group mt-6 inline-flex items-center gap-3 font-mono text-sm text-neon-blue transition-colors hover:text-neon-purple"
+          >
+            <Mail size={16} className="transition-transform group-hover:-translate-y-0.5" />
+            {socials.email}
+          </a>
 
-        <p className="mt-8 font-mono text-sm text-text-muted">
-          {'//'} {socials.email}
-        </p>
+          {/* decorative terminal card */}
+          <div className="gradient-border card-glow mt-10 max-w-sm rounded-xl p-1">
+            <div className="rounded-lg bg-surface p-4 font-mono text-xs leading-relaxed">
+              <div className="mb-3 flex gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
+                <span className="ml-2 text-text-muted">~/contact</span>
+              </div>
+              <p>
+                <span className="text-neon-purple">$</span>{' '}
+                <span className="text-text-secondary">ping</span>{' '}
+                <span className="text-neon-blue">andri</span>
+              </p>
+              <p className="text-green-400">→ reply_time: fast ⚡</p>
+              <p className="text-green-400">→ status: open_to_work</p>
+            </div>
+          </div>
+        </motion.div>
 
-        <div className="mt-6 flex justify-center gap-4">
-          {socialLinks.map(({ href, icon: Icon, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={label}
-              className="rounded-lg border border-line bg-surface/60 p-3 text-text-secondary transition-all hover:-translate-y-1 hover:border-neon-blue/60 hover:text-neon-blue hover:shadow-[0_0_20px_rgba(56,189,248,0.25)]"
-            >
-              <Icon size={20} />
-            </a>
-          ))}
-        </div>
-      </motion.div>
+        {/* right — form */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
+        >
+          <form onSubmit={onSubmit} noValidate className="space-y-5">
+            {/* honeypot — hidden from humans */}
+            <input
+              type="text"
+              name="website"
+              value={form.website}
+              onChange={(e) => setForm({ ...form, website: e.target.value })}
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="contact-name" className="contact-label">
+                  {'//'} {pick(lang, inputProps.name.label)}
+                </label>
+                <div className="relative">
+                  <User
+                    size={15}
+                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-text-muted"
+                  />
+                  <input
+                    id="contact-name"
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder={pick(lang, inputProps.name.placeholder)}
+                    className={`${fieldClass(!!errors.name)} pl-10`}
+                    maxLength={100}
+                  />
+                </div>
+                {errors.name && <p className="contact-error">{errors.name}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="contact-email" className="contact-label">
+                  {'//'} {pick(lang, inputProps.email.label)}
+                </label>
+                <div className="relative">
+                  <Mail
+                    size={15}
+                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-text-muted"
+                  />
+                  <input
+                    id="contact-email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder={pick(lang, inputProps.email.placeholder)}
+                    className={`${fieldClass(!!errors.email)} pl-10`}
+                    maxLength={150}
+                  />
+                </div>
+                {errors.email && <p className="contact-error">{errors.email}</p>}
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" className="contact-label">
+                {'//'} {pick(lang, inputProps.message.label)}
+              </label>
+              <textarea
+                id="contact-message"
+                rows={5}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                placeholder={pick(lang, inputProps.message.placeholder)}
+                className={`${fieldClass(!!errors.message)} resize-y`}
+                maxLength={2000}
+              />
+              {errors.message && <p className="contact-error">{errors.message}</p>}
+            </div>
+
+            <NovaGlowButton type="submit" className="w-full sm:w-auto">
+              {status === 'sending' ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  {pick(lang, t.sending)}
+                </>
+              ) : (
+                <>
+                  <Send size={16} />
+                  {pick(lang, t.submit)}
+                </>
+              )}
+            </NovaGlowButton>
+
+            {/* status messages */}
+            <AnimatePresence>
+              {status === 'success' && (
+                <motion.p
+                  key="success"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2 font-mono text-sm text-green-400"
+                  role="status"
+                >
+                  <CheckCircle2 size={16} />
+                  {pick(lang, t.success)}
+                </motion.p>
+              )}
+              {status === 'error' && (
+                <motion.p
+                  key="error"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2 font-mono text-sm text-red-400"
+                  role="alert"
+                >
+                  <AlertCircle size={16} />
+                  {pick(lang, t.error)}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </form>
+        </motion.div>
+      </div>
     </section>
   )
 }

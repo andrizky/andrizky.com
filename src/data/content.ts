@@ -187,10 +187,35 @@ export const ui = {
       en: "My inbox is always open — whether you have a project in mind or just want to say hi, I'll do my best to reply!",
       id: 'Email saya selalu terbuka — entah kamu punya proyek atau sekadar menyapa, saya akan berusaha membalas!',
     },
-    button: { en: 'Say hello', id: 'Sapa saya' },
+    form: {
+      name: { en: 'your name', id: 'namamu' },
+      namePlaceholder: { en: 'John Doe', id: 'Si Namamu' },
+      email: { en: 'your email', id: 'emailmu' },
+      emailPlaceholder: { en: 'john@example.com', id: 'si@example.com' },
+      message: { en: 'your message', id: 'pesanmu' },
+      messagePlaceholder: {
+        en: "Tell me about your project or just say hi...",
+        id: 'Ceritakan proyekmu atau sekadar sapa...',
+      },
+      submit: { en: 'Send message', id: 'Kirim pesan' },
+      sending: { en: 'Sending...', id: 'Mengirim...' },
+      success: {
+        en: "Message sent — I'll get back to you soon!",
+        id: 'Pesan terkirim — aku akan segera membalas!',
+      },
+      error: {
+        en: 'Something went wrong. Please try again or email me directly.',
+        id: 'Terjadi kesalahan. Coba lagi atau email aku langsung.',
+      },
+      invalidEmail: { en: 'Please enter a valid email.', id: 'Masukkan email yang valid.' },
+      required: { en: 'This field is required.', id: 'Kolom ini wajib diisi.' },
+    },
     copyright: {
       en: 'Designed & built by Andri Rizky P',
       id: 'Dirancang & dibangun oleh Andri Rizky P',
     },
   },
 }
+
+/** n8n webhook receiving portfolio contact submissions (Telegram bot workflow). */
+export const CONTACT_WEBHOOK_URL = 'https://n8n-andri.devscale.tech/webhook/contactMe'
