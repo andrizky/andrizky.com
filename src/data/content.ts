@@ -82,17 +82,17 @@ export const experience: ExperienceItem[] = [
     tech: ['React', 'AI Automation', 'n8n', 'Telegram Bots', 'Web Apps'],
   },
   {
-    period: '2025 — Present',
-    role: 'Officer 3 — Project Supervision, Deployment',
+    period: '2023 — Present',
+    role: 'Site Manager — Project Construction',
     company: 'Telkom Akses',
     description: {
-      en: 'Supervising FTTH deployment projects in the Construction unit — overseeing progress, quality and delivery of network builds across regions.',
-      id: 'Mengawasi proyek deployment FTTH di unit Construction — memantau progres, kualitas, dan penyelesaian pembangunan jaringan lintas wilayah.',
+      en: 'Managing FTTH construction projects in the Construction unit — overseeing site execution, progress and quality of network builds across regions.',
+      id: 'Mengelola proyek konstruksi FTTH di unit Construction — mengawasi eksekusi site, progres, dan kualitas pembangunan jaringan lintas wilayah.',
     },
-    tech: ['Leadership', 'Project Supervision', 'FTTH', 'Deployment', 'Construction'],
+    tech: ['Leadership', 'Site Management', 'Project Construction', 'FTTH'],
   },
   {
-    period: '2020 — 2024',
+    period: '2019 — 2022',
     role: 'Site Manager — Provisioning & Migration',
     company: 'Telkom Akses',
     description: {
@@ -102,7 +102,7 @@ export const experience: ExperienceItem[] = [
     tech: ['Leadership', 'Site Management', 'Provisioning', 'Migration', 'Operations'],
   },
   {
-    period: '2015 — 2019',
+    period: '2015 — 2018',
     role: 'Team Leader — Provisioning, DSHR, Migration, CCAN, BGES',
     company: 'Telkom Akses',
     description: {
