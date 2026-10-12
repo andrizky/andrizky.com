@@ -107,7 +107,7 @@ export function ParticleField() {
           const d2 = dx * dx + dy * dy
           if (d2 < LINK_DISTANCE * LINK_DISTANCE) {
             const t = 1 - Math.sqrt(d2) / LINK_DISTANCE
-            ctx.strokeStyle = `rgba(99,102,241,${(t * 0.13).toFixed(3)})`
+            ctx.strokeStyle = `rgba(99,102,241,${(t * 0.3).toFixed(3)})`
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
