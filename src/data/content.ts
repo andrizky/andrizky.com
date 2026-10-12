@@ -72,34 +72,54 @@ export const projects: Project[] = [
 
 export const experience: ExperienceItem[] = [
   {
-    period: '2024 — Present',
-    role: 'Frontend Developer',
-    company: 'TechCorp Inc.',
+    period: '2013 — Present',
+    role: 'Software Engineer',
+    company: 'Freelance',
     description: {
-      en: 'Building and maintaining customer-facing web apps with React & TypeScript. Led the migration to a modern Vite toolchain, cutting build times by 60%.',
-      id: 'Membangun dan merawat aplikasi web customer-facing dengan React & TypeScript. Memimpin migrasi ke toolchain Vite modern, memangkas waktu build hingga 60%.',
+      en: "Independent full-stack development, automation and software projects — web apps, AI-powered workflows, bots and integrations — running in parallel with the formal career from day one.",
+      id: 'Pengembangan full-stack, automasi, dan proyek software secara independen — web apps, workflow berbasis AI, bot, dan integrasi — berjalan paralel dengan karier formal sejak hari pertama.',
     },
-    tech: ['React', 'TypeScript', 'Tailwind'],
+    tech: ['React', 'AI Automation', 'n8n', 'Telegram Bots', 'Web Apps'],
   },
   {
-    period: '2022 — 2024',
-    role: 'Web Developer',
-    company: 'Digital Studio',
+    period: '2025 — Present',
+    role: 'Officer 3 — Project Supervision, Deployment',
+    company: 'Telkom Akses',
     description: {
-      en: 'Delivered 15+ client websites and internal tools. Collaborated with designers to build accessible, responsive interfaces.',
-      id: 'Menyelesaikan 15+ website klien dan tools internal. Berkolaborasi dengan desainer untuk membangun antarmuka yang responsif dan aksesibel.',
+      en: 'Supervising FTTH deployment projects in the Construction unit — overseeing progress, quality and delivery of network builds across regions.',
+      id: 'Mengawasi proyek deployment FTTH di unit Construction — memantau progres, kualitas, dan penyelesaian pembangunan jaringan lintas wilayah.',
     },
-    tech: ['JavaScript', 'Vue', 'Node.js'],
+    tech: ['Project Supervision', 'FTTH', 'Deployment', 'Construction'],
   },
   {
-    period: '2021 — 2022',
-    role: 'Junior Developer',
-    company: 'Startup Labs',
+    period: '2020 — 2024',
+    role: 'Site Manager — Provisioning & Migration',
+    company: 'Telkom Akses',
     description: {
-      en: 'Started my professional journey — built landing pages, fixed bugs, and learned the ropes of shipping real products.',
-      id: 'Memulai perjalanan profesional — membangun landing page, memperbaiki bug, dan belajar mengirim produk nyata.',
+      en: 'Managing provisioning and migration operations in the Operations unit — coordinating field teams and ensuring service moves happen on time and to standard.',
+      id: 'Mengelola operasional provisioning dan migrasi di unit Operations — mengoordinasikan tim lapangan dan memastikan migrasi layanan tepat waktu dan sesuai standar.',
     },
-    tech: ['HTML/CSS', 'JavaScript', 'PHP'],
+    tech: ['Site Management', 'Provisioning', 'Migration', 'Operations'],
+  },
+  {
+    period: '2016 — 2019',
+    role: 'Team Leader — Provisioning, DSHR, Migration, CCAN, BGES',
+    company: 'Telkom Akses',
+    description: {
+      en: 'Leading teams across provisioning, DSHR, migration, CCAN and BGES operations in the Operations unit.',
+      id: 'Memimpin tim di operasional provisioning, DSHR, migrasi, CCAN, dan BGES pada unit Operations.',
+    },
+    tech: ['Team Leadership', 'Provisioning', 'DSHR', 'CCAN', 'BGES'],
+  },
+  {
+    period: '2013 — 2014',
+    role: 'Technician — Swakelola',
+    company: 'Telkom Akses',
+    description: {
+      en: "Hands-on execution in Telkom Akses's in-house (swakelola) operations unit — where the network career started.",
+      id: 'Eksekusi langsung di unit operasional swakelola Telkom Akses — di mana karier jaringan dimulai.',
+    },
+    tech: ['Field Operations', 'Telecom Infrastructure'],
   },
 ]
 
