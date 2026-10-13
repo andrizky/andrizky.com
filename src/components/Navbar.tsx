@@ -49,11 +49,10 @@ const containerVariants: Variants = {
 }
 
 const logoVariants: Variants = {
-  expanded: { opacity: 1, x: 0, rotate: 0, transition: { type: 'spring', damping: 15 } },
+  expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
   collapsed: {
     opacity: [1, 0.2, 1],
     x: [0, -14, 0],
-    rotate: [0, -180, 0],
     transition: { duration: 0.45, times: [0, 0.5, 1] },
   },
 }
@@ -103,8 +102,8 @@ export function Navbar() {
       }`}
     >
       <nav
-        className={`flex items-center transition-all duration-300 ${
-          compact ? 'gap-5 px-5 py-2.5' : 'h-16 w-full justify-between gap-4 px-6'
+        className={`flex h-12 items-center justify-between transition-all duration-300 ${
+          compact ? 'gap-5 px-5' : 'w-full gap-4 px-6'
         }`}
       >
         {/* logo */}
