@@ -13,7 +13,6 @@ export function Navbar() {
   const { lang } = useLanguage()
   const [open, setOpen] = useState(false)
   const [compact, setCompact] = useState(false)
-  const [hovered, setHovered] = useState<string | null>(null)
   const active = useActiveSection([...SECTIONS])
 
   // morph into a floating pill once the page is scrolled
@@ -34,7 +33,7 @@ export function Navbar() {
         maxWidth: compact ? 'fit-content' : '100%',
         borderRadius: compact ? 999 : 0,
       }}
-      transition={{ type: 'spring', stiffness: 260, damping: 30 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`fixed inset-x-0 z-50 mx-auto overflow-hidden border backdrop-blur-md ${
         compact
           ? 'border-line/80 bg-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_24px_rgba(99,102,241,0.12)]'
@@ -65,42 +64,32 @@ export function Navbar() {
             compact ? 'gap-0.5' : 'gap-1'
           }`}
         >
-          {SECTIONS.slice(1).map((id) => {
-            const isHovered = hovered === id
-            return (
-              <li key={id}>
-                <button
-                  type="button"
-                  onClick={() => go(id)}
-                  onMouseEnter={() => setHovered(id)}
-                  onMouseLeave={() => setHovered((h) => (h === id ? null : h))}
-                  className={`group relative px-3 font-mono transition-colors ${
-                    compact ? 'py-1.5 text-xs' : 'py-2 text-sm'
-                  } ${active === id || isHovered ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'}`}
-                >
-                  {/* spring pill — one element morphing between links */}
-                  {isHovered && (
-                    <motion.span
-                      layoutId="nav-hover-pill"
-                      aria-hidden
-                      className="absolute inset-0 rounded-full border border-neon-blue/30 bg-gradient-to-r from-neon-blue/15 via-indigo-400/12 to-neon-purple/15 shadow-[0_0_18px_rgba(99,102,241,0.25)]"
-                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative z-10">
-                    <span className="mr-1 text-xs text-neon-purple">.</span>
-                    {pick(lang, ui.nav[id])}
-                  </span>
-                  {/* underline — persistent on the active section */}
-                  <span
-                    className={`relative z-10 mt-0.5 block h-px origin-center bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-300 ${
-                      active === id ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
-                    }`}
-                  />
-                </button>
-              </li>
-            )
-          })}
+          {SECTIONS.slice(1).map((id) => (
+            <li key={id}>
+              <button
+                type="button"
+                onClick={() => go(id)}
+                className={`nav-bloom group px-3 font-mono transition-colors ${
+                  compact ? 'py-1.5 text-xs' : 'py-2 text-sm'
+                } ${active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'}`}
+              >
+                {/* bloom layer — grows from center behind the text */}
+                <span aria-hidden className="nav-bloom-glow" />
+                <span className="relative z-10">
+                  <span className="mr-1 text-xs text-neon-purple">.</span>
+                  {pick(lang, ui.nav[id])}
+                </span>
+                {/* underline — persistent on the active section, faint on hover */}
+                <span
+                  className={`relative z-10 mt-0.5 block h-px origin-center bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-300 ${
+                    active === id
+                      ? 'scale-x-100 opacity-100'
+                      : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50'
+                  }`}
+                />
+              </button>
+            </li>
+          ))}
         </ul>
 
         <div className="flex items-center gap-3">
