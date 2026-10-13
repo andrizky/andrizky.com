@@ -12,14 +12,13 @@ const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'
 export function Navbar() {
   const { lang } = useLanguage()
   const [open, setOpen] = useState(false)
-  const [hidden, setHidden] = useState(false)
+  const [compact, setCompact] = useState(false)
   const active = useActiveSection([...SECTIONS])
 
-  // hide when scrolling down, reveal when scrolling up
+  // shrink the bar once the page is scrolled
   const { scrollY } = useScroll()
   useMotionValueEvent(scrollY, 'change', (y) => {
-    const prev = scrollY.getPrevious() ?? 0
-    setHidden(y > prev && y > 140)
+    setCompact(y > 40)
   })
 
   const go = (id: string) => {
@@ -29,16 +28,24 @@ export function Navbar() {
 
   return (
     <motion.header
-      animate={{ y: hidden ? '-100%' : '0%' }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-bg/70 backdrop-blur-md"
+      animate={{ height: compact ? 48 : 64 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className={`fixed inset-x-0 top-0 z-50 overflow-hidden border-b backdrop-blur-md transition-colors duration-300 ${
+        compact ? 'border-line/80 bg-bg/90 shadow-[0_4px_24px_rgba(0,0,0,0.35)]' : 'border-line/60 bg-bg/70'
+      }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <nav
+        className={`mx-auto flex max-w-6xl items-center justify-between px-6 transition-all duration-300 ${
+          compact ? 'h-12' : 'h-16'
+        }`}
+      >
         {/* logo */}
         <button
           type="button"
           onClick={() => go('home')}
-          className="font-mono text-lg font-bold tracking-tight text-text-primary"
+          className={`font-mono font-bold tracking-tight text-text-primary transition-all duration-300 ${
+            compact ? 'text-base' : 'text-lg'
+          }`}
         >
           <span className="text-neon-blue">&lt;</span>AR
           <span className="text-gradient">/</span>
@@ -52,9 +59,9 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => go(id)}
-                className={`nav-bloom group px-3 py-2 font-mono text-sm transition-colors ${
-                  active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'
-                }`}
+                className={`nav-bloom group px-3 font-mono transition-colors ${
+                  compact ? 'py-1.5 text-xs' : 'py-2 text-sm'
+                } ${active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'}`}
               >
                 {/* bloom layer — grows from center behind the text */}
                 <span aria-hidden className="nav-bloom-glow" />
