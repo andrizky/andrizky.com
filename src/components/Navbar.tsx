@@ -16,25 +16,31 @@ const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'
 
 const containerVariants: Variants = {
   expanded: {
+    top: 0,
+    width: '100%',
+    borderRadius: 0,
     y: 0,
     opacity: 1,
     transition: {
+      top: { type: 'spring', damping: 20, stiffness: 300 },
+      width: { type: 'spring', damping: 20, stiffness: 300 },
+      borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
       y: { type: 'spring', damping: 18, stiffness: 250 },
       opacity: { duration: 0.3 },
-      type: 'spring',
-      damping: 20,
-      stiffness: 300,
       staggerChildren: 0.07,
-      delayChildren: 0.2,
+      delayChildren: 0.15,
     },
   },
   collapsed: {
+    top: 12,
+    width: 'auto',
+    borderRadius: 999,
     y: 0,
     opacity: 1,
     transition: {
-      type: 'spring',
-      damping: 20,
-      stiffness: 300,
+      top: { type: 'spring', damping: 20, stiffness: 300 },
+      width: { type: 'spring', damping: 20, stiffness: 300 },
+      borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
       when: 'afterChildren',
       staggerChildren: 0.05,
       staggerDirection: -1,
@@ -77,24 +83,16 @@ export function Navbar() {
       initial={false}
       animate={compact ? 'collapsed' : 'expanded'}
       variants={containerVariants}
-      style={
-        compact
-          ? { position: 'fixed', top: 12, left: '50%', x: '-50%' }
-          : { position: 'fixed', top: 0, left: 0, right: 0 }
-      }
-      className={`z-50 border backdrop-blur-md ${
-        compact
-          ? 'rounded-full border-line/80 bg-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_24px_rgba(99,102,241,0.12)]'
-          : 'border-line/60 bg-bg/70'
-      }`}
+      style={{ x: '-50%' }}
+      className="fixed left-1/2 z-50 border backdrop-blur-md"
     >
       <nav
         className={`flex items-center transition-all duration-300 ${
-          compact ? 'gap-5 px-5 py-2.5' : 'h-16 justify-between gap-4 px-6'
+          compact ? 'gap-5 px-5 py-2.5' : 'h-16 w-screen justify-between gap-4 px-6'
         }`}
       >
         {/* logo */}
-        <motion.div variants={logoVariants}>
+        <motion.div variants={logoVariants} className="flex-shrink-0">
           <button
             type="button"
             onClick={() => go('home')}
