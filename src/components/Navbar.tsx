@@ -50,17 +50,31 @@ const containerVariants: Variants = {
 
 const logoVariants: Variants = {
   expanded: { opacity: 1, x: 0, rotate: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 0, x: -25, rotate: -180, transition: { duration: 0.3 } },
+  collapsed: {
+    opacity: [1, 0.2, 1],
+    x: [0, -14, 0],
+    rotate: [0, -180, 0],
+    transition: { duration: 0.45, times: [0, 0.5, 1] },
+  },
 }
 
 const itemVariants: Variants = {
   expanded: { opacity: 1, x: 0, scale: 1, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 0, x: -20, scale: 0.95, transition: { duration: 0.2 } },
+  collapsed: {
+    opacity: [1, 0.3, 1],
+    x: [0, -12, 0],
+    scale: [1, 0.95, 1],
+    transition: { duration: 0.45, times: [0, 0.5, 1] },
+  },
 }
 
 const toggleVariants: Variants = {
   expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 0, x: 20, transition: { duration: 0.2 } },
+  collapsed: {
+    opacity: [1, 0.2, 1],
+    x: [0, 14, 0],
+    transition: { duration: 0.45, times: [0, 0.5, 1] },
+  },
 }
 
 export function Navbar() {
@@ -84,7 +98,7 @@ export function Navbar() {
       animate={compact ? 'collapsed' : 'expanded'}
       variants={containerVariants}
       style={{ x: '-50%' }}
-      className="fixed left-1/2 z-50 border backdrop-blur-md"
+      className="fixed left-1/2 z-50 backdrop-blur-md"
     >
       <nav
         className={`flex items-center transition-all duration-300 ${
