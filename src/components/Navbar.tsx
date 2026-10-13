@@ -9,22 +9,25 @@ import { scrollToSection } from '../lib/scroll'
 const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'] as const
 
 /**
- * Full-width bar at top; on scroll it plays the stagger choreography
- * (children exit one-by-one) and then springs into a floating pill.
- * Reverse cascade on the way back up.
+ * Full-width bar at top; on scroll it springs into a floating pill.
+ * Everything — top, width, radius, vertical padding and text scale —
+ * rides the same critically-damped spring so the whole morph is
+ * perfectly synchronized.
  */
+
+const SPRING = { type: 'spring', damping: 35, stiffness: 300 } as const
 
 const containerVariants: Variants = {
   expanded: {
     top: 0,
     width: '100%',
     borderRadius: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
     y: 0,
     opacity: 1,
     transition: {
-      top: { type: 'spring', damping: 35, stiffness: 300 },
-      width: { type: 'spring', damping: 35, stiffness: 300 },
-      borderRadius: { type: 'spring', damping: 35, stiffness: 300 },
+      ...SPRING,
       y: { type: 'spring', damping: 35, stiffness: 250 },
       opacity: { duration: 0.3 },
     },
@@ -33,29 +36,29 @@ const containerVariants: Variants = {
     top: 12,
     width: 'auto',
     borderRadius: 999,
+    paddingTop: 10,
+    paddingBottom: 10,
     y: 0,
     opacity: 1,
     transition: {
-      top: { type: 'spring', damping: 35, stiffness: 300 },
-      width: { type: 'spring', damping: 35, stiffness: 300 },
-      borderRadius: { type: 'spring', damping: 35, stiffness: 300 },
+      ...SPRING,
     },
   },
 }
 
 const logoVariants: Variants = {
-  expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
+  expanded: { scale: 1.125, opacity: 1, x: 0, transition: SPRING },
+  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
 }
 
 const itemVariants: Variants = {
-  expanded: { opacity: 1, x: 0, scale: 1, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 1, x: 0, scale: 1, transition: { type: 'spring', damping: 15 } },
+  expanded: { scale: 1.167, opacity: 1, x: 0, transition: SPRING },
+  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
 }
 
 const toggleVariants: Variants = {
-  expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
+  expanded: { scale: 1.09, opacity: 1, x: 0, transition: SPRING },
+  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
 }
 
 export function Navbar() {
@@ -83,19 +86,13 @@ export function Navbar() {
         compact ? 'border-line/80' : 'border-line/60'
       }`}
     >
-      <nav
-        className={`flex h-12 items-center justify-between transition-all duration-300 ${
-          compact ? 'gap-5 px-5' : 'w-full gap-4 px-6'
-        }`}
-      >
-        {/* logo */}
-        <motion.div variants={logoVariants} className="flex-shrink-0">
+      <nav className="flex h-12 items-center justify-between">
+        {/* logo — rendered at pill size, scaled up when expanded */}
+        <motion.div variants={logoVariants} style={{ originX: 0, originY: 0.5 }} className="flex-shrink-0">
           <button
             type="button"
             onClick={() => go('home')}
-            className={`font-mono font-bold tracking-tight text-text-primary transition-all duration-300 ${
-              compact ? 'text-base' : 'text-lg'
-            }`}
+            className="px-5 font-mono text-base font-bold tracking-tight text-text-primary"
           >
             <span className="text-neon-blue">&lt;</span>AR
             <span className="text-gradient">/</span>
@@ -103,23 +100,23 @@ export function Navbar() {
           </button>
         </motion.div>
 
-        {/* desktop links */}
+        {/* desktop links — rendered at pill size, scaled up when expanded */}
         <motion.ul
           variants={itemVariants}
-          className={`hidden items-center md:flex ${compact ? 'gap-0.5' : 'gap-1'}`}
+          className="hidden items-center gap-0.5 md:flex"
         >
           {SECTIONS.slice(1).map((id) => (
             <li key={id}>
               <button
                 type="button"
                 onClick={() => go(id)}
-                className={`nav-bloom group px-3 font-mono transition-colors ${
-                  compact ? 'py-1.5 text-xs' : 'py-2 text-sm'
-                } ${active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'}`}
+                className={`nav-bloom group px-3 py-1.5 font-mono text-xs transition-colors ${
+                  active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'
+                }`}
               >
                 <span aria-hidden className="nav-bloom-glow" />
                 <span className="relative z-10">
-                  <span className="mr-1 text-xs text-neon-purple">.</span>
+                  <span className="mr-1 text-[10px] text-neon-purple">.</span>
                   {pick(lang, ui.nav[id])}
                 </span>
                 <span
@@ -134,8 +131,8 @@ export function Navbar() {
           ))}
         </motion.ul>
 
-        {/* toggle */}
-        <motion.div variants={toggleVariants} className="flex items-center">
+        {/* toggle — rendered at pill size, scaled up when expanded */}
+        <motion.div variants={toggleVariants} className="flex items-center pr-5">
           <LanguageToggle />
         </motion.div>
       </nav>
