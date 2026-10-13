@@ -27,8 +27,6 @@ const containerVariants: Variants = {
       borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
       y: { type: 'spring', damping: 18, stiffness: 250 },
       opacity: { duration: 0.3 },
-      staggerChildren: 0.07,
-      delayChildren: 0.15,
     },
   },
   collapsed: {
@@ -41,39 +39,23 @@ const containerVariants: Variants = {
       top: { type: 'spring', damping: 20, stiffness: 300 },
       width: { type: 'spring', damping: 20, stiffness: 300 },
       borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
-      when: 'afterChildren',
-      staggerChildren: 0.05,
-      staggerDirection: -1,
     },
   },
 }
 
 const logoVariants: Variants = {
   expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: {
-    opacity: [1, 0.2, 1],
-    x: [0, -14, 0],
-    transition: { duration: 0.45, times: [0, 0.5, 1] },
-  },
+  collapsed: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
 }
 
 const itemVariants: Variants = {
   expanded: { opacity: 1, x: 0, scale: 1, transition: { type: 'spring', damping: 15 } },
-  collapsed: {
-    opacity: [1, 0.3, 1],
-    x: [0, -12, 0],
-    scale: [1, 0.95, 1],
-    transition: { duration: 0.45, times: [0, 0.5, 1] },
-  },
+  collapsed: { opacity: 1, x: 0, scale: 1, transition: { type: 'spring', damping: 15 } },
 }
 
 const toggleVariants: Variants = {
   expanded: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
-  collapsed: {
-    opacity: [1, 0.2, 1],
-    x: [0, 14, 0],
-    transition: { duration: 0.45, times: [0, 0.5, 1] },
-  },
+  collapsed: { opacity: 1, x: 0, transition: { type: 'spring', damping: 15 } },
 }
 
 export function Navbar() {
