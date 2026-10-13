@@ -19,8 +19,12 @@ const EXPAND_SCROLL_THRESHOLD = 80
  */
 const containerVariants: Variants = {
   expanded: {
+    y: 0,
+    opacity: 1,
     width: 'auto',
     transition: {
+      y: { type: 'spring', damping: 18, stiffness: 250 },
+      opacity: { duration: 0.3 },
       type: 'spring',
       damping: 20,
       stiffness: 300,
@@ -29,6 +33,8 @@ const containerVariants: Variants = {
     },
   },
   collapsed: {
+    y: 0,
+    opacity: 1,
     width: '3rem',
     transition: {
       type: 'spring',
