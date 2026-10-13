@@ -36,8 +36,8 @@ const containerVariants: Variants = {
     top: 12,
     width: 'auto',
     borderRadius: 999,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     y: 0,
     opacity: 1,
     transition: {
