@@ -1,32 +1,43 @@
-# React + TypeScript + Vite
+# andrizky.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio of **Andri Rizky P** — Full-Stack Developer & AI Automation Engineer.
 
-Currently, two official plugins are available:
+Cyberpunk-themed single-page portfolio with interactive background effects, bilingual content (EN/ID), and a contact form wired to an n8n automation workflow.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- **Vite** + **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- **Motion** (Framer Motion) — spring-based UI animations
+- **Lenis** — smooth scrolling
+- **Lucide** — icons
+- **Cloudflare Pages** — hosting
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the Oxlint configuration
+- 🌗 Interactive cyberpunk background: particle constellation, parallax glow orbs, cursor spotlight, tilting grid
+- 💊 Morphing floating-pill navbar (full-width bar → pill on scroll)
+- 🌐 EN/ID language toggle (persisted)
+- ✉️ Contact form → n8n webhook → Telegram bot
+- ♿ Respects `prefers-reduced-motion`, responsive, Lighthouse 99 perf
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Development
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev       # dev server at :5173
+npm run build     # production build → dist/
+npm run preview   # serve the production build at :4173
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Deployment
+
+Deployed on **Cloudflare Pages**, connected to this repository:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Custom domain: [andrizky.com](https://andrizky.com)
+
+---
+
+© Andri Rizky P
