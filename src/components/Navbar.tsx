@@ -36,7 +36,7 @@ const containerVariants: Variants = {
   collapsed: {
     top: 12,
     width: 'auto',
-    height: 32,
+    height: 48,
     borderRadius: 999,
     paddingTop: 0,
     paddingBottom: 0,
