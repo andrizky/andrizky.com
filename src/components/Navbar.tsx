@@ -22,10 +22,10 @@ const containerVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      top: { type: 'spring', damping: 20, stiffness: 300 },
-      width: { type: 'spring', damping: 20, stiffness: 300 },
-      borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
-      y: { type: 'spring', damping: 18, stiffness: 250 },
+      top: { type: 'spring', damping: 35, stiffness: 300 },
+      width: { type: 'spring', damping: 35, stiffness: 300 },
+      borderRadius: { type: 'spring', damping: 35, stiffness: 300 },
+      y: { type: 'spring', damping: 35, stiffness: 250 },
       opacity: { duration: 0.3 },
     },
   },
@@ -36,9 +36,9 @@ const containerVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      top: { type: 'spring', damping: 20, stiffness: 300 },
-      width: { type: 'spring', damping: 20, stiffness: 300 },
-      borderRadius: { type: 'spring', damping: 20, stiffness: 300 },
+      top: { type: 'spring', damping: 35, stiffness: 300 },
+      width: { type: 'spring', damping: 35, stiffness: 300 },
+      borderRadius: { type: 'spring', damping: 35, stiffness: 300 },
     },
   },
 }
