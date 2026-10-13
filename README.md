@@ -1,6 +1,10 @@
 # andrizky.com
 
+[![Live](https://img.shields.io/badge/live-andrizky.com-8b5cf6?style=flat&logo=cloudflare&logoColor=white)](https://andrizky.com)
+
 Personal portfolio of **Andri Rizky P** — Full-Stack Developer & AI Automation Engineer.
+
+🔗 **[andrizky.com](https://andrizky.com)**
 
 Cyberpunk-themed single-page portfolio with interactive background effects, bilingual content (EN/ID), and a contact form wired to an n8n automation workflow.
 
@@ -32,11 +36,11 @@ npm run preview   # serve the production build at :4173
 
 ## Deployment
 
-Deployed on **Cloudflare Pages**, connected to this repository:
+Live at **[andrizky.com](https://andrizky.com)** — hosted on **Cloudflare Pages**, connected to this repository:
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Custom domain: [andrizky.com](https://andrizky.com)
+- Custom domain: `andrizky.com` (www redirects to apex)
 
 ---
 
