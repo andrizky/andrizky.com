@@ -21,6 +21,7 @@ const containerVariants: Variants = {
   expanded: {
     top: 0,
     width: '100%',
+    height: 64,
     borderRadius: 0,
     paddingTop: 8,
     paddingBottom: 8,
@@ -35,9 +36,10 @@ const containerVariants: Variants = {
   collapsed: {
     top: 12,
     width: 'auto',
+    height: 32,
     borderRadius: 999,
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 0,
+    paddingBottom: 0,
     y: 0,
     opacity: 1,
     transition: {
@@ -86,7 +88,7 @@ export function Navbar() {
         compact ? 'border-line/80' : 'border-line/60'
       }`}
     >
-      <nav className="flex h-12 items-center justify-between">
+      <nav className="flex h-full items-center justify-between">
         {/* logo — rendered at pill size, scaled up when expanded */}
         <motion.div variants={logoVariants} style={{ originX: 0, originY: 0.5 }} className="flex-shrink-0">
           <button
