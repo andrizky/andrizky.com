@@ -222,15 +222,15 @@ export const ui = {
   experience: {
     title: { en: 'Experience', id: 'Pengalaman' },
     subtitle: {
-      en: 'My professional journey so far.',
-      id: 'Perjalanan profesional saya sejauh ini.',
+      en: 'From pulling fiber in the field to leading deployments — every chapter taught me something the next one needed.',
+      id: 'Dari menarik fiber di lapangan hingga memimpin deployment — setiap bab mengajarkan sesuatu yang dibutuhkan di bab berikutnya.',
     },
   },
   skills: {
     title: { en: 'Skills & Tools', id: 'Keahlian & Tools' },
     subtitle: {
-      en: 'Technologies I work with every day.',
-      id: 'Teknologi yang saya gunakan setiap hari.',
+      en: 'The toolbox changes per project — the mindset never does.',
+      id: 'Kotak perkakasnya berubah tiap proyek — pola pikirnya tidak pernah.',
     },
   },
   contact: {
