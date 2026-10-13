@@ -13,12 +13,14 @@ interface Particle {
 const COLORS = ['56,189,248', '168,85,247', '129,140,248'] // blue, purple, indigo
 const REPEL_RADIUS = 130 // px — cursor pushes particles away within this range
 const LINK_DISTANCE = 100 // px — faint lines between nearby particles
+const MAX_PARTICLES = 150
 
 /**
  * Canvas particle field: slow-drifting neon dots that flee from the
  * cursor and link to nearby neighbors (constellation style).
  * Pure canvas — zero React re-renders. Drift + links always run;
  * cursor repulsion activates whenever pointer events fire.
+ * The loop pauses when the tab is hidden.
  */
 export function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -42,7 +44,7 @@ export function ParticleField() {
     const mouse = { x: -9999, y: -9999 }
 
     const spawn = () => {
-      const count = Math.min(280, Math.floor((w * h) / 5500))
+      const count = Math.min(MAX_PARTICLES, Math.floor((w * h) / 5500))
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -129,18 +131,31 @@ export function ParticleField() {
       raf = requestAnimationFrame(tick)
     }
 
+    const start = () => {
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+    const stop = () => {
+      cancelAnimationFrame(raf)
+      raf = 0
+    }
+
+    // pause the loop while the tab is hidden — saves main-thread time
+    const onVisibility = () => (document.hidden ? stop() : start())
+
     resize()
-    tick()
+    start()
 
     window.addEventListener('resize', resize)
     window.addEventListener('pointermove', onMove, { passive: true })
     document.documentElement.addEventListener('mouseleave', onLeave)
+    document.addEventListener('visibilitychange', onVisibility)
 
     return () => {
-      cancelAnimationFrame(raf)
+      stop()
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', onMove)
       document.documentElement.removeEventListener('mouseleave', onLeave)
+      document.removeEventListener('visibilitychange', onVisibility)
     }
   }, [])
 

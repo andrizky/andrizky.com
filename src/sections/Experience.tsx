@@ -23,7 +23,7 @@ export function Experience() {
         <div className="space-y-12">
           {experience.map((item, i) => (
             <motion.article
-              key={item.company}
+              key={`${item.role}-${item.period}`}
               initial={{ opacity: 0, x: 32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
