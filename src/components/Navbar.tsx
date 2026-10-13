@@ -15,7 +15,7 @@ export function Navbar() {
   const [compact, setCompact] = useState(false)
   const active = useActiveSection([...SECTIONS])
 
-  // shrink the bar once the page is scrolled
+  // morph into a floating pill once the page is scrolled
   const { scrollY } = useScroll()
   useMotionValueEvent(scrollY, 'change', (y) => {
     setCompact(y > 40)
@@ -28,15 +28,21 @@ export function Navbar() {
 
   return (
     <motion.header
-      animate={{ height: compact ? 48 : 64 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className={`fixed inset-x-0 top-0 z-50 overflow-hidden border-b backdrop-blur-md transition-colors duration-300 ${
-        compact ? 'border-line/80 bg-bg/90 shadow-[0_4px_24px_rgba(0,0,0,0.35)]' : 'border-line/60 bg-bg/70'
+      animate={{
+        top: compact ? 12 : 0,
+        maxWidth: compact ? 'fit-content' : '100%',
+        borderRadius: compact ? 999 : 0,
+      }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={`fixed inset-x-0 z-50 mx-auto overflow-hidden border backdrop-blur-md ${
+        compact
+          ? 'border-line/80 bg-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_24px_rgba(99,102,241,0.12)]'
+          : 'border-line/60 bg-bg/70'
       }`}
     >
       <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between px-6 transition-all duration-300 ${
-          compact ? 'h-12' : 'h-16'
+        className={`flex items-center transition-all duration-300 ${
+          compact ? 'gap-5 px-5 py-2.5' : 'h-16 justify-between gap-4 px-6'
         }`}
       >
         {/* logo */}
@@ -53,7 +59,11 @@ export function Navbar() {
         </button>
 
         {/* desktop links */}
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul
+          className={`hidden items-center transition-all duration-300 md:flex ${
+            compact ? 'gap-0.5' : 'gap-1'
+          }`}
+        >
           {SECTIONS.slice(1).map((id) => (
             <li key={id}>
               <button
