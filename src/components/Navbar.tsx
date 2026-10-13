@@ -98,11 +98,13 @@ export function Navbar() {
       animate={compact ? 'collapsed' : 'expanded'}
       variants={containerVariants}
       style={{ x: '-50%' }}
-      className="fixed left-1/2 z-50 backdrop-blur-md"
+      className={`fixed left-1/2 z-50 border backdrop-blur-md transition-colors duration-300 ${
+        compact ? 'border-line/80' : 'border-line/60'
+      }`}
     >
       <nav
         className={`flex items-center transition-all duration-300 ${
-          compact ? 'gap-5 px-5 py-2.5' : 'h-16 w-screen justify-between gap-4 px-6'
+          compact ? 'gap-5 px-5 py-2.5' : 'h-16 w-full justify-between gap-4 px-6'
         }`}
       >
         {/* logo */}
