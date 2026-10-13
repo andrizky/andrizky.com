@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { motion, useMotionValueEvent, useScroll, type Variants } from 'motion/react'
-import { Menu } from 'lucide-react'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { ui } from '../data/content'
 import { useActiveSection } from '../hooks/useActiveSection'
@@ -9,19 +8,16 @@ import { scrollToSection } from '../lib/scroll'
 
 const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'] as const
 
-const EXPAND_SCROLL_THRESHOLD = 80
-
 /**
- * Theatrical collapse morph — adapted from the 21st.dev
- * `animated-nav-framer` component pattern: the navbar collapses into a
- * tiny circle with links staggering out one by one, and expands back
- * with a spring cascade.
+ * Full-width bar at top; on scroll it plays the stagger choreography
+ * (children exit one-by-one) and then springs into a floating pill.
+ * Reverse cascade on the way back up.
  */
+
 const containerVariants: Variants = {
   expanded: {
     y: 0,
     opacity: 1,
-    width: 'auto',
     transition: {
       y: { type: 'spring', damping: 18, stiffness: 250 },
       opacity: { duration: 0.3 },
@@ -35,7 +31,6 @@ const containerVariants: Variants = {
   collapsed: {
     y: 0,
     opacity: 1,
-    width: '3rem',
     transition: {
       type: 'spring',
       damping: 20,
@@ -62,74 +57,50 @@ const toggleVariants: Variants = {
   collapsed: { opacity: 0, x: 20, transition: { duration: 0.2 } },
 }
 
-const collapsedIconVariants: Variants = {
-  expanded: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
-  collapsed: {
-    opacity: 1,
-    scale: 1,
-    transition: { type: 'spring', damping: 15, stiffness: 300, delay: 0.15 },
-  },
-}
-
 export function Navbar() {
   const { lang } = useLanguage()
-  const [expanded, setExpanded] = React.useState(true)
+  const [compact, setCompact] = React.useState(false)
   const active = useActiveSection([...SECTIONS])
 
+  // morph full-width bar → floating pill once the page is scrolled
   const { scrollY } = useScroll()
-  const lastScrollY = React.useRef(0)
-  const scrollPositionOnCollapse = React.useRef(0)
-
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    const previous = lastScrollY.current
-
-    if (expanded && latest > previous && latest > 150) {
-      setExpanded(false)
-      scrollPositionOnCollapse.current = latest
-    } else if (
-      !expanded &&
-      latest < previous &&
-      scrollPositionOnCollapse.current - latest > EXPAND_SCROLL_THRESHOLD
-    ) {
-      setExpanded(true)
-    }
-
-    lastScrollY.current = latest
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    setCompact(y > 40)
   })
 
   const go = (id: string) => {
-    if (!expanded) {
-      setExpanded(true)
-      return
-    }
     scrollToSection(`#${id}`)
   }
 
   return (
-    <div className="fixed top-6 left-1/2 z-50 -translate-x-1/2">
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={expanded ? 'expanded' : 'collapsed'}
-        variants={containerVariants}
-        whileHover={!expanded ? { scale: 1.1 } : {}}
-        whileTap={!expanded ? { scale: 0.95 } : {}}
-        onClick={!expanded ? () => setExpanded(true) : undefined}
-        className={`flex h-12 items-center overflow-hidden rounded-full border bg-bg/85 shadow-lg backdrop-blur-md ${
-          expanded ? 'border-line/80' : 'cursor-pointer border-neon-purple/40 shadow-[0_0_20px_rgba(139,92,246,0.35)]'
+    <motion.header
+      initial={false}
+      animate={compact ? 'collapsed' : 'expanded'}
+      variants={containerVariants}
+      style={
+        compact
+          ? { position: 'fixed', top: 12, left: '50%', x: '-50%' }
+          : { position: 'fixed', top: 0, left: 0, right: 0 }
+      }
+      className={`z-50 border backdrop-blur-md ${
+        compact
+          ? 'rounded-full border-line/80 bg-bg/90 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_24px_rgba(99,102,241,0.12)]'
+          : 'border-line/60 bg-bg/70'
+      }`}
+    >
+      <nav
+        className={`flex items-center transition-all duration-300 ${
+          compact ? 'gap-5 px-5 py-2.5' : 'h-16 justify-between gap-4 px-6'
         }`}
       >
         {/* logo */}
-        <motion.div
-          variants={logoVariants}
-          className="flex flex-shrink-0 items-center pl-4 pr-2"
-        >
+        <motion.div variants={logoVariants}>
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              go('home')
-            }}
-            className="font-mono text-base font-bold tracking-tight text-text-primary"
+            onClick={() => go('home')}
+            className={`font-mono font-bold tracking-tight text-text-primary transition-all duration-300 ${
+              compact ? 'text-base' : 'text-lg'
+            }`}
           >
             <span className="text-neon-blue">&lt;</span>AR
             <span className="text-gradient">/</span>
@@ -137,22 +108,19 @@ export function Navbar() {
           </button>
         </motion.div>
 
-        {/* links + toggle */}
-        <motion.div
-          className={`flex items-center gap-0.5 pr-3 ${!expanded ? 'pointer-events-none' : ''}`}
+        {/* desktop links */}
+        <motion.ul
+          variants={itemVariants}
+          className={`hidden items-center md:flex ${compact ? 'gap-0.5' : 'gap-1'}`}
         >
-          {SECTIONS.slice(1).map((id) => {
-            return (
-              <motion.button
-                key={id}
-                variants={itemVariants}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  go(id)
-                }}
-                className={`nav-bloom group relative px-3 py-1.5 font-mono text-xs transition-colors ${
-                  active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'
-                }`}
+          {SECTIONS.slice(1).map((id) => (
+            <li key={id}>
+              <button
+                type="button"
+                onClick={() => go(id)}
+                className={`nav-bloom group px-3 font-mono transition-colors ${
+                  compact ? 'py-1.5 text-xs' : 'py-2 text-sm'
+                } ${active === id ? 'text-neon-blue' : 'text-text-secondary hover:text-neon-blue'}`}
               >
                 <span aria-hidden className="nav-bloom-glow" />
                 <span className="relative z-10">
@@ -161,28 +129,21 @@ export function Navbar() {
                 </span>
                 <span
                   className={`relative z-10 mt-0.5 block h-px origin-center bg-gradient-to-r from-neon-blue to-neon-purple transition-all duration-300 ${
-                    active === id ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+                    active === id
+                      ? 'scale-x-100 opacity-100'
+                      : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50'
                   }`}
                 />
-              </motion.button>
-            )
-          })}
+              </button>
+            </li>
+          ))}
+        </motion.ul>
 
-          <motion.span variants={toggleVariants} className="pl-1">
-            <LanguageToggle />
-          </motion.span>
+        {/* toggle */}
+        <motion.div variants={toggleVariants} className="flex items-center">
+          <LanguageToggle />
         </motion.div>
-
-        {/* collapsed orb icon */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <motion.div
-            variants={collapsedIconVariants}
-            animate={expanded ? 'expanded' : 'collapsed'}
-          >
-            <Menu className="h-5 w-5 text-neon-purple" />
-          </motion.div>
-        </div>
-      </motion.nav>
-    </div>
+      </nav>
+    </motion.header>
   )
 }
