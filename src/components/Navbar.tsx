@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, type Variants } from 'motion/react'
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, type Variants } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { pick, useLanguage } from '../context/LanguageContext'
 import { ui } from '../data/content'
@@ -17,58 +17,71 @@ const SECTIONS = ['home', 'about', 'projects', 'experience', 'skills', 'contact'
  */
 
 const SPRING = { type: 'spring', damping: 35, stiffness: 300 } as const
+const INSTANT = { duration: 0 } as const
 
-const containerVariants: Variants = {
-  expanded: {
-    top: 0,
-    width: '100%',
-    height: 64,
-    borderRadius: 0,
-    paddingTop: 8,
-    paddingBottom: 8,
-    y: 0,
-    opacity: 1,
-    transition: {
-      ...SPRING,
-      y: { type: 'spring', damping: 35, stiffness: 250 },
-      opacity: { duration: 0.3 },
+/**
+ * Variant factory — when the user prefers reduced motion every transition
+ * collapses to instant, so the morph just switches state without movement.
+ */
+function buildVariants(instant: boolean) {
+  const spring = instant ? INSTANT : SPRING
+
+  const container: Variants = {
+    expanded: {
+      top: 0,
+      width: '100%',
+      height: 64,
+      borderRadius: 0,
+      paddingTop: 8,
+      paddingBottom: 8,
+      y: 0,
+      opacity: 1,
+      transition: instant
+        ? INSTANT
+        : {
+            ...SPRING,
+            y: { type: 'spring', damping: 35, stiffness: 250 },
+            opacity: { duration: 0.3 },
+          },
     },
-  },
-  collapsed: {
-    top: 12,
-    width: 'auto',
-    height: 48,
-    borderRadius: 999,
-    paddingTop: 0,
-    paddingBottom: 0,
-    y: 0,
-    opacity: 1,
-    transition: {
-      ...SPRING,
+    collapsed: {
+      top: 12,
+      width: 'auto',
+      height: 48,
+      borderRadius: 999,
+      paddingTop: 0,
+      paddingBottom: 0,
+      y: 0,
+      opacity: 1,
+      transition: instant ? INSTANT : { ...SPRING },
     },
-  },
-}
+  }
 
-const logoVariants: Variants = {
-  expanded: { scale: 1.125, opacity: 1, x: 0, transition: SPRING },
-  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
-}
+  const logo: Variants = {
+    expanded: { scale: 1.125, opacity: 1, x: 0, transition: spring },
+    collapsed: { scale: 1, opacity: 1, x: 0, transition: spring },
+  }
 
-const itemVariants: Variants = {
-  expanded: { scale: 1.167, opacity: 1, x: 0, transition: SPRING },
-  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
-}
+  const item: Variants = {
+    expanded: { scale: 1.167, opacity: 1, x: 0, transition: spring },
+    collapsed: { scale: 1, opacity: 1, x: 0, transition: spring },
+  }
 
-const toggleVariants: Variants = {
-  expanded: { scale: 1.09, opacity: 1, x: 0, transition: SPRING },
-  collapsed: { scale: 1, opacity: 1, x: 0, transition: SPRING },
+  const toggle: Variants = {
+    expanded: { scale: 1.09, opacity: 1, x: 0, transition: spring },
+    collapsed: { scale: 1, opacity: 1, x: 0, transition: spring },
+  }
+
+  return { container, logo, item, toggle }
 }
 
 export function Navbar() {
   const { lang } = useLanguage()
   const [compact, setCompact] = React.useState(false)
   const [open, setOpen] = React.useState(false)
+  const reduced = useReducedMotion()
   const active = useActiveSection([...SECTIONS])
+  const v = React.useMemo(() => buildVariants(!!reduced), [reduced])
 
   // morph full-width bar → floating pill once the page is scrolled
   const { scrollY } = useScroll()
@@ -96,7 +109,7 @@ export function Navbar() {
       <motion.header
         initial={false}
         animate={compact ? 'collapsed' : 'expanded'}
-        variants={containerVariants}
+        variants={v.container}
         style={{ x: '-50%' }}
         className={`fixed left-1/2 z-50 border backdrop-blur-md transition-colors duration-300 ${
           compact ? 'border-line/80' : 'border-line/60'
@@ -104,7 +117,7 @@ export function Navbar() {
       >
       <nav className="flex h-full items-center justify-between">
         {/* logo — rendered at pill size, scaled up when expanded */}
-        <motion.div variants={logoVariants} style={{ originX: 0, originY: 0.5 }} className="flex-shrink-0">
+        <motion.div variants={v.logo} style={{ originX: 0, originY: 0.5 }} className="flex-shrink-0">
           <button
             type="button"
             onClick={() => go('home')}
@@ -118,7 +131,7 @@ export function Navbar() {
 
         {/* desktop links — rendered at pill size, scaled up when expanded */}
         <motion.ul
-          variants={itemVariants}
+          variants={v.item}
           className="hidden items-center gap-0.5 md:flex"
         >
           {SECTIONS.slice(1).map((id) => (
@@ -148,7 +161,7 @@ export function Navbar() {
         </motion.ul>
 
         {/* toggle + mobile menu button */}
-        <motion.div variants={toggleVariants} className="flex items-center gap-2 pr-4">
+        <motion.div variants={v.toggle} className="flex items-center gap-2 pr-4">
           <span className="hidden md:inline-flex">
             <LanguageToggle />
           </span>
@@ -172,7 +185,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            transition={reduced ? { duration: 0 } : { duration: 0.25, ease: 'easeOut' }}
             className="fixed inset-0 z-40 flex flex-col justify-center bg-bg/95 px-8 backdrop-blur-xl md:hidden"
           >
             <nav>
@@ -182,7 +195,11 @@ export function Navbar() {
                     key={id}
                     initial={{ opacity: 0, x: -24 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.06 * i + 0.1, duration: 0.35, ease: 'easeOut' }}
+                    transition={
+                      reduced
+                        ? { duration: 0 }
+                        : { delay: 0.06 * i + 0.1, duration: 0.35, ease: 'easeOut' }
+                    }
                   >
                     <button
                       type="button"
@@ -203,7 +220,11 @@ export function Navbar() {
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.06 * (SECTIONS.length - 1) + 0.2, duration: 0.35 }}
+                transition={
+                  reduced
+                    ? { duration: 0 }
+                    : { delay: 0.06 * (SECTIONS.length - 1) + 0.2, duration: 0.35 }
+                }
                 className="mt-10 border-t border-line/60 pt-6"
               >
                 <LanguageToggle />
