@@ -149,7 +149,9 @@ export function Navbar() {
 
         {/* toggle + mobile menu button */}
         <motion.div variants={toggleVariants} className="flex items-center gap-2 pr-4">
-          <LanguageToggle />
+          <span className="hidden md:inline-flex">
+            <LanguageToggle />
+          </span>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
