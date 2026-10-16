@@ -203,8 +203,8 @@ export const ui = {
   projects: {
     title: { en: 'Projects', id: 'Proyek' },
     subtitle: {
-      en: 'Things I have built — placeholders you can replace with your real work.',
-      id: 'Hal-hal yang telah saya bangun — placeholder yang bisa diganti dengan karya aslimu.',
+      en: "A few things I've built end to end — from first commit to production.",
+      id: 'Beberapa hal yang saya bangun dari awal sampai akhir — dari commit pertama hingga produksi.',
     },
     demo: { en: 'Live demo', id: 'Demo langsung' },
     code: { en: 'Code', id: 'Kode' },
