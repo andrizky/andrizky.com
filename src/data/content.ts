@@ -6,6 +6,7 @@ export interface Project {
   tech: string[]
   link?: string
   repo?: string
+  image?: string
   featured?: boolean
 }
 
@@ -29,44 +30,33 @@ export const socials = {
 
 export const projects: Project[] = [
   {
-    title: 'Neon Commerce',
+    title: 'Dragonfire Hub',
     description: {
-      en: 'Full-stack e-commerce platform with real-time inventory, payment integration and an admin dashboard.',
-      id: 'Platform e-commerce full-stack dengan inventaris real-time, integrasi pembayaran, dan dashboard admin.',
+      en: 'Full-stack web platform deployed on Cloudflare Workers — server-side rendering, a D1 database and membership integration with Patreon for supporter access.',
+      id: 'Platform web full-stack yang di-deploy di Cloudflare Workers — server-side rendering, database D1, dan integrasi keanggotaan dengan Patreon untuk akses pendukung.',
     },
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-    link: 'https://example.com',
-    repo: 'https://github.com/andrizky',
+    tech: ['Next.js', 'Cloudflare Workers', 'D1', 'Patreon API'],
+    link: 'https://dragonfire-hub.com',
+    image: '/projects/dragonfire-hub.webp',
     featured: true,
   },
   {
-    title: 'TaskFlow',
+    title: 'Automated Reporting Bot',
     description: {
-      en: 'Kanban-style project management app with drag & drop, team collaboration and offline support.',
-      id: 'Aplikasi manajemen proyek bergaya Kanban dengan drag & drop, kolaborasi tim, dan dukungan offline.',
+      en: 'Scheduled automation that pulls operational data from a web dashboard, parses and formats it, then delivers structured daily reports straight to Telegram — replacing a manual, error-prone routine.',
+      id: 'Automasi terjadwal yang mengambil data operasional dari dashboard web, mengolah dan memformatnya, lalu mengirim laporan harian terstruktur langsung ke Telegram — menggantikan rutinitas manual yang rawan kesalahan.',
     },
-    tech: ['React', 'TypeScript', 'Tailwind', 'Supabase'],
-    link: 'https://example.com',
-    repo: 'https://github.com/andrizky',
-    featured: true,
+    tech: ['n8n', 'Web Scraping', 'Telegram Bot API', 'Cron'],
+    image: '/projects/reporting-bot.webp',
   },
   {
-    title: 'DevMonitor',
+    title: 'Spreadsheet Automation Engine',
     description: {
-      en: 'Server monitoring dashboard with live metrics, alerting and beautiful data visualizations.',
-      id: 'Dashboard monitoring server dengan metrik langsung, peringatan, dan visualisasi data yang menarik.',
+      en: 'Formula-driven reporting system built on spreadsheets — nested lookups, dynamic aggregation and automated data pipelines that turn raw operational exports into ready-to-use reports.',
+      id: 'Sistem pelaporan berbasis formula di spreadsheet — nested lookup, agregasi dinamis, dan pipeline data otomatis yang mengubah data operasional mentah menjadi laporan siap pakai.',
     },
-    tech: ['Vite', 'React', 'WebSocket', 'Chart.js'],
-    link: 'https://example.com',
-  },
-  {
-    title: 'Pixel Portfolio Engine',
-    description: {
-      en: 'Config-driven portfolio generator for developers — deploy a personal site in minutes.',
-      id: 'Generator portofolio berbasis konfigurasi untuk developer — deploy situs pribadi dalam hitungan menit.',
-    },
-    tech: ['React', 'Vite', 'Motion', 'Cloudflare'],
-    repo: 'https://github.com/andrizky',
+    tech: ['Google Sheets', 'Excel', 'Apps Script', 'Data Modeling'],
+    image: '/projects/spreadsheet.webp',
   },
 ]
 
